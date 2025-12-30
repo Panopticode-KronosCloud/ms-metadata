@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.panopticode'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':')
+    implementation testLibs.junit.jupiter.api
+    implementation testLibs.assertj
+}

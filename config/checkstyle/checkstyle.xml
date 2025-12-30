@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<!--
+  ~ java-spring-boot-ms-template
+  ~ Copyright (c) 2024-2026 Panopticode.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <!--
+        If you set the basedir property below, then all reported file
+        names will be relative to the specified directory. See
+        https://checkstyle.org/config.html#Checker
+
+        <property name="basedir" value="${basedir}"/>
+    -->
+    <property name="severity" value="error"/>
+
+    <!-- File extensions that are accepted. Default value: all files -->
+    <!-- <property name="fileExtensions" value="java, properties, xml"/> -->
+
+    <property name="tabWidth" value="4"/>
+
+    <!-- Excludes all 'module-info.java' and 'package-info.java files   -->
+    <!-- See https://checkstyle.org/filefilters/index.html -->
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="(module|package)\-info\.java$"/>
+    </module>
+
+    <!-- https://checkstyle.org/filters/suppressionfilter.html -->
+    <module name="SuppressionFilter">
+        <property name="file" value="${config_loc}/suppressions.xml"/>
+    </module>
+
+    <!-- Checks that a package-info.java file exists for each package.     -->
+    <!-- See https://checkstyle.org/checks/javadoc/javadocpackage.html#JavadocPackage -->
+    <!-- <module name="JavadocPackage"/> -->
+
+    <!-- Checks whether files end with a new line.                        -->
+    <!-- See https://checkstyle.org/checks/misc/newlineatendoffile.html -->
+    <module name="NewlineAtEndOfFile">
+        <property name="lineSeparator" value="lf"/>
+    </module>
+
+    <!-- <module name="SeverityMatchFilter"> -->
+    <!--     <property name="severity" value="warning"/> -->
+    <!--     <property name="acceptOnMatch" value="true"/> -->
+    <!-- </module> -->
+
+    <!-- Checks for Size Violations.                    -->
+    <!-- See https://checkstyle.org/checks/sizes/index.html -->
+    <module name="FileLength"/>
+    <module name="LineLength">
+        <property name="max" value="160"/>
+        <property name="fileExtensions" value="java"/>
+    </module>
+
+    <!-- Checks for whitespace                               -->
+    <!-- See https://checkstyle.org/checks/whitespace/index.html -->
+    <module name="FileTabCharacter"/>
+
+    <module name="OrderedProperties"/>
+
+    <module name="UniqueProperties"/>
+
+    <!-- Checks for Headers                                -->
+    <!-- See https://checkstyle.org/checks/header/index.html   -->
+    <module name="RegexpHeader">
+        <property name="headerFile" value="${config_loc}/java.header"/>
+        <property name="multiLines" value="19, 21"/>
+    </module>
+
+    <!-- Miscellaneous other checks.                   -->
+    <!-- See https://checkstyle.org/checks/misc/index.html -->
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$"/>
+        <property name="minimum" value="0"/>
+        <property name="maximum" value="0"/>
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+
+    <module name="TreeWalker">
+        <module name="SuppressWarningsHolder" />
+
+        <!-- Annotations -->
+        <module name="AnnotationLocation"/>
+        <module name="AnnotationUseStyle"/>
+        <module name="MissingDeprecated">
+            <property name="violateExecutionOnNonTightHtml" value="true"/>
+        </module>
+        <module name="MissingOverride"/>
+
+        <!-- Block Checks -->
+        <module name="AvoidNestedBlocks"/>
+        <module name="EmptyBlock"/>
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected|ignore"/>
+        </module>
+        <module name="LeftCurly">
+            <property name="ignoreEnums" value="false"/>
+            <property name="option" value="nl"/>
+        </module>
+        <module name="NeedBraces"/>
+        <module name="RightCurly"/>
+
+        <!-- Class design -->
+        <module name="FinalClass"/>
+        <module name="HideUtilityClassConstructor"/>
+        <module name="InnerTypeLast"/>
+        <module name="InterfaceIsType">
+            <property name="allowMarkerInterfaces" value="true"/>
+        </module>
+        <module name="MutableException"/>
+        <module name="OneTopLevelClass"/>
+        <module name="ThrowsCount"/>
+        <module name="VisibilityModifier"/>
+
+        <!-- Coding -->
+        <module name="ArrayTrailingComma">
+            <property name="alwaysDemandTrailingComma" value="true"/>
+        </module>
+        <module name="AvoidDoubleBraceInitialization"/>
+        <module name="AvoidNoArgumentSuperConstructorCall"/>
+        <module name="CovariantEquals"/>
+        <module name="DeclarationOrder"/>
+        <module name="DefaultComesLast"/>
+        <module name="EmptyStatement"/>
+        <module name="EqualsAvoidNull"/>
+        <module name="EqualsHashCode"/>
+        <module name="ExplicitInitialization"/>
+        <module name="FallThrough"/>
+        <module name="FinalLocalVariable"/>
+        <module name="HiddenField"/>
+        <module name="IllegalCatch"/>
+        <module name="IllegalInstantiation">
+            <property name="classes" value=
+                    "java.lang.Boolean,
+                     java.lang.Integer"/>
+        </module>
+        <module name="IllegalThrows"/>
+        <module name="IllegalToken"/>
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_LONG"/>
+            <property name="format" value="^0[^L]"/>
+            <property name="ignoreCase" value="false"/>
+            <property name="message" value="Long numbers must end with capital 'L'"/>
+        </module>
+        <module name="InnerAssignment"/>
+        <module name="MagicNumber">
+            <property name="id" value="MagicNumberProd"/>
+        </module>
+        <module name="MatchXpath">
+            <property name="query" value="//METHOD_DEF[.//LITERAL_PRIVATE and
+              following-sibling::METHOD_DEF[.//LITERAL_PUBLIC]]"/>
+            <message key="matchxpath.match"
+                     value="Private methods must appear after public methods"/>
+        </module>
+        <module name="MatchXpath">
+            <property name="query" value="//METHOD_DEF//VARIABLE_DEF[./ASSIGN/EXPR/*
+              and not(./TYPE/IDENT[@text='var'])]"/>
+            <message key="matchxpath.match"
+                     value="New instances should be created via 'var' keyword to avoid duplication of
+              type reference in statement"/>
+        </module>
+        <module name="MissingCtor">
+            <property name="id" value="MissingCtorProd"/>
+        </module>
+        <module name="MissingSwitchDefault"/>
+        <module name="ModifiedControlVariable"/>
+        <module name="MultipleStringLiterals">
+            <!-- Strings shorter than 12 chars should be ignored -->
+            <property name="ignoreStringsRegexp" value='^.{0,12}$'/>
+        </module>
+        <module name="MultipleVariableDeclarations"/>
+        <module name="NestedForDepth">
+            <property name="max" value="2"/>
+        </module>
+        <module name="NestedIfDepth"/>
+        <module name="NestedTryDepth"/>
+        <module name="NoClone"/>
+        <module name="NoFinalizer"/>
+        <module name="OneStatementPerLine"/>
+        <module name="OverloadMethodsDeclarationOrder"/>
+        <module name="PackageDeclaration"/>
+        <module name="ParameterAssignment"/>
+        <module name="RequireThis"/>
+        <module name="ReturnCount"/>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+        <module name="StringLiteralEquality"/>
+        <module name="SuperClone"/>
+        <module name="SuperFinalize"/>
+        <module name="UnnecessaryParentheses"/>
+        <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
+        <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
+        <module name="UnnecessarySemicolonInEnumeration"/>
+        <module name="UnnecessarySemicolonInTryWithResources"/>
+        <module name="UnusedLocalVariable"/>
+
+        <!-- Imports -->
+        <module name="AvoidStarImport"/>
+        <module name="CustomImportOrder">
+            <property name="customImportOrderRules" value="SPECIAL_IMPORTS, THIRD_PARTY_PACKAGE, STANDARD_JAVA_PACKAGE, STATIC"/>
+            <property name="specialImportsRegExp" value="^com\.panopticode\."/>
+            <property name="sortImportsInGroupAlphabetically" value="true"/>
+            <property name="separateLineBetweenGroups" value="true"/>
+        </module>
+        <module name="IllegalImport"/>
+        <module name="RedundantImport"/>
+        <module name="UnusedImports"/>
+
+        <!-- Javadoc -->
+        <module name="AtclauseOrder"/>
+        <module name="InvalidJavadocPosition"/>
+        <module name="JavadocContentLocation"/>
+        <module name="JavadocMethod">
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+            <property name="validateThrows" value="true"/>
+        </module>
+        <module name="JavadocMissingLeadingAsterisk"/>
+        <module name="JavadocMissingWhitespaceAfterAsterisk"/>
+        <module name="JavadocParagraph"/>
+        <module name="JavadocStyle"/>
+        <module name="JavadocTagContinuationIndentation"/>
+        <module name="MissingJavadocType">
+            <property name="id" value="MissingJavadocTypeProd"/>
+        </module>
+        <module name="NonEmptyAtclauseDescription"/>
+        <module name="RequireEmptyLineBeforeBlockTagGroup"/>
+
+        <!-- Metrics -->
+        <module name="BooleanExpressionComplexity"/>
+        <module name="ClassDataAbstractionCoupling"/>
+        <module name="ClassFanOutComplexity"/>
+        <module name="CyclomaticComplexity"/>
+        <module name="JavaNCSS"/>
+        <module name="NPathComplexity"/>
+
+        <!-- Miscellaneous -->
+        <module name="ArrayTypeStyle"/>
+        <module name="AvoidEscapedUnicodeCharacters"/>
+        <module name="CommentsIndentation"/>
+        <module name="Indentation">
+            <property name="arrayInitIndent" value="8"/>
+        </module>
+        <module name="NoCodeInFile"/>
+        <module name="OuterTypeFilename"/>
+        <module name="TrailingComment">
+            <property name="format" value="^(?: *@\w+\(&quot;[\w:]+&quot;\)\s+|[\s});]*)$"/>
+        </module>
+
+        <!-- Modifiers -->
+        <module name="ModifierOrder"/>
+        <module name="RedundantModifier"/>
+
+        <!-- Naming Conventions -->
+        <module name="AbstractClassName"/>
+        <module name="CatchParameterName"/>
+        <module name="ClassTypeParameterName"/>
+        <module name="ConstantName"/>
+        <module name="IllegalIdentifierName"/>
+        <module name="InterfaceTypeParameterName"/>
+        <module name="LambdaParameterName"/>
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName">
+            <property name="format" value="^_[a-z][a-zA-Z0-9]*$"/>
+        </module>
+        <module name="MethodName">
+            <property name="id" value="PrivateMemberNameProd"/>
+            <property name="applyToPackage" value="false"/>
+            <property name="applyToPrivate" value="true"/>
+            <property name="applyToPublic" value="false"/>
+            <property name="applyToProtected" value="false"/>
+            <property name="format" value="^_[a-z][a-zA-Z0-9]*$"/>
+        </module>
+        <module name="MethodName">
+            <property name="id" value="NonPrivateMemberNameProd"/>
+            <property name="applyToPrivate" value="false"/>
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+        <module name="TestMethodName">
+            <property name="format" value="^test[A-Z][a-zA-Z0-9]*_[a-z][a-zA-Z0-9]*$"/>
+            <message key="panopticode.name.invalidPattern"
+                     value="Test method ''{0}'' should be called following the pattern ''testMethod_variant'', e.g testFetchCustomerById_nonExistent"/>
+        </module>
+        <module name="MethodTypeParameterName"/>
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
+        <module name="ParameterName"/>
+        <module name="PatternVariableName"/>
+        <module name="RecordComponentName"/>
+        <module name="RecordTypeParameterName"/>
+        <module name="StaticVariableName"/>
+        <module name="TypeName"/>
+
+        <!-- Size violations -->
+        <module name="AnonInnerLength">
+            <property name="max" value="10"/>
+        </module>
+        <module name="LambdaBodyLength">
+            <property name="max" value="5"/>
+        </module>
+        <module name="MethodCount"/>
+        <module name="MethodLength">
+            <property name="countEmpty" value="false"/>
+        </module>
+        <module name="OuterTypeNumber"/>
+        <module name="ParameterNumber">
+            <property name="max" value="6"/>
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
+        <module name="RecordComponentNumber">
+            <property name="max" value="12"/>
+        </module>
+
+        <!-- Whitespace -->
+        <module name="EmptyForInitializerPad">
+            <property name="option" value="space"/>
+        </module>
+        <module name="EmptyForIteratorPad">
+            <property name="option" value="space"/>
+        </module>
+        <module name="EmptyLineSeparator">
+            <property name="allowMultipleEmptyLines" value="false"/>
+            <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+        </module>
+        <module name="GenericWhitespace"/>
+        <module name="MethodParamPad"/>
+        <module name="NoLineWrap"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="NoWhitespaceBeforeCaseDefaultColon"/>
+        <module name="OperatorWrap"/>
+        <module name="ParenPad"/>
+        <module name="SeparatorWrap">
+            <property name="option" value="eol"/>
+            <property name="tokens" value="COMMA, SEMI, ELLIPSIS, RPAREN, ARRAY_DECLARATOR, RBRACK"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="option" value="nl"/>
+            <property name="tokens" value="DOT , METHOD_REF"/>
+        </module>
+        <module name="SingleSpaceSeparator"/>
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround"/>
+
+        <!-- Filters -->
+        <module name="SuppressionCommentFilter">
+            <property name="checkC" value="false"/>
+            <property name="offCommentFormat" value="checkstyle:suspend (\w+)"/>
+            <property name="onCommentFormat" value="checkstyle:resume (\w+)"/>
+            <property name="checkFormat" value="$1"/>
+        </module>
+
+        <!-- Custom -->
+        <module name="RegexpSinglelineJava">
+            <property name="id" value="systemout"/>
+            <property name="format" value="^.*System\.(out|err).*$"/>
+            <property name="message"
+                      value="Don't use System.out/err, use SLF4J instead."/>
+        </module>
+
+    </module>
+    <module name="SuppressWarningsFilter" />
+
+</module>

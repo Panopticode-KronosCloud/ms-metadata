@@ -1,0 +1,26 @@
+rootProject.name = 'java-spring-boot-ms-template'
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven {
+            url = uri('https://maven.pkg.github.com/Phortran/spring-boot-ms-version-catalog')
+            credentials {
+                username = hasProperty('gpr.user') ? getProperty('gpr.user') : System.getenv('GITHUB_ACTOR')
+                password = hasProperty('gpr.key') ? getProperty('gpr.key') : System.getenv('GITHUB_TOKEN')
+            }
+        }
+    }
+
+    versionCatalogs {
+        libs {
+            from('com.panopticode:spring-boot-ms-version-catalog:1.0.5')
+        }
+        testLibs {
+            from('com.panopticode:ms-test-version-catalog:1.0.3')
+        }
+    }
+}
+
+include 'custom-checks'
+include 'test-common'

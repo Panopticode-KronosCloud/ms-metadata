@@ -1,0 +1,6 @@
+/README.md
+**/application.properties
+pom.xml
+**/openapi.yaml
+src/test/**
+**/OpenApiGeneratorApplication.java

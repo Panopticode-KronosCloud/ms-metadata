@@ -1,0 +1,6 @@
+description: Data object to save a new recipe
+required: true
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/RequiredRecipeBody.yaml

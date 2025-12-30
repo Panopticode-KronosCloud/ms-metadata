@@ -1,0 +1,88 @@
+put:
+  description: Update an existing ingredient
+  summary: Update ingredient
+  tags:
+    - cookbook
+  operationId: updateIngredient
+  parameters:
+    - name: recipeId
+      in: path
+      description: Recipe id
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: ingredientId
+      in: path
+      description: Ingredient id to update
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/Ingredient.yaml
+    '400':
+      description: Invalid ID supplied
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/ErrorModel.yaml
+    '404':
+      description: Recipe or ingredient not found
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/ErrorModel.yaml
+    '405':
+      description: Validation exception
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/ErrorModel.yaml
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/ErrorModel.yaml
+delete:
+  description: Deletes an existing ingredient off a recipe
+  summary: Deletes a ingredient
+  tags:
+    - cookbook
+  operationId: deleteIngredient
+  parameters:
+    - name: recipeId
+      in: path
+      description: Recipe id
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: ingredientId
+      in: path
+      description: Ingredient id to delete
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '204':
+      description: Deletion completed successfully
+    '404':
+      description: Invalid recipe or ingredient id
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/ErrorModel.yaml
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/ErrorModel.yaml

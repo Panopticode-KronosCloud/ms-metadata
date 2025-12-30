@@ -1,0 +1,365 @@
+import com.github.spotbugs.snom.Effort
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+plugins {
+	id 'java'
+	id 'jvm-test-suite'
+	id 'checkstyle'
+	id 'jacoco'
+	alias libs.plugins.spring.bom
+	alias libs.plugins.spring.boot
+	alias libs.plugins.flyway
+	alias libs.plugins.jooq
+	alias libs.plugins.openapi.gen
+	alias libs.plugins.spotbugs
+}
+
+group = 'com.panopticode'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+apply from: 'jooq/jooq.gradle'
+
+dependencies {
+	// Lombok
+	compileOnly libs.lombok
+	annotationProcessor libs.lombok
+	annotationProcessor libs.mapstruct.lombok
+
+	// MapStruct
+	compileOnly libs.mapstruct
+	annotationProcessor libs.mapstruct.processor
+
+	// Logging
+	implementation libs.slf4j.api
+	implementation libs.bundles.logback
+	implementation libs.p6spy
+
+
+	// Spring
+	implementation libs.bundles.spring.boot
+	implementation libs.bundles.spring.persistence
+
+	// Persistence
+	implementation libs.flyway.core
+	implementation libs.flyway.postgres
+	implementation libs.jooq
+
+	// Additional dependencies for OpenAPI
+	implementation libs.openapi.jack
+	implementation libs.springdoc.openapi.ui
+
+	developmentOnly testLibs.spring.boot.docker
+	developmentOnly testLibs.spring.boot.devtools
+
+	jooqCodegen libs.postgres
+	jooqCodegen libs.jaxb
+
+	runtimeOnly libs.postgres
+
+	// Checks
+	spotbugsPlugins libs.findsecbugs
+
+	// Custom checks
+	checkstyle project(':custom-checks')
+}
+
+ext['junit-jupiter.version'] = '5.12.0'
+
+testing {
+	suites {
+		test {
+			useJUnitJupiter()
+
+			dependencies {
+				implementation project(':test-common')
+				implementation platform(testLibs.junit)
+				implementation testLibs.assertj
+				implementation testLibs.mockito.core
+				implementation testLibs.mockito.junit
+
+				runtimeOnly testLibs.junit.launcher
+			}
+
+			sources {
+				java {
+					srcDirs = ['src/test/unit/java']
+				}
+				resources {
+					srcDirs = ['src/test/resources']
+				}
+			}
+		}
+
+		integrationTest(JvmTestSuite) {
+			dependencies {
+				implementation project(':')
+				implementation project(':test-common')
+				implementation testLibs.spring.boot.test
+				implementation testLibs.spring.boot.test.cnt
+				implementation testLibs.spring.tx
+				implementation testLibs.test.cnt.junit
+				implementation testLibs.test.cnt.postgres
+				implementation libs.jooq
+				implementation libs.flyway.core
+			}
+
+			sources {
+				java {
+					srcDirs = ['src/test/integration/java']
+				}
+				resources {
+					srcDirs = ['src/test/resources']
+				}
+			}
+
+			targets {
+				configureEach {
+					testTask.configure {
+						shouldRunAfter(test)
+					}
+				}
+			}
+		}
+	}
+}
+
+tasks.named('check') {
+	dependsOn(testing.suites.integrationTest)
+}
+
+// Idk why the jvm-test-suite seems to ungroup the checkstyle tasks
+tasks.withType(Checkstyle.class).configureEach {
+	group = 'Verification'
+}
+
+test {
+	jacoco {
+		classDumpDir = layout.buildDirectory.dir('jacoco/unit/classpathdumps').get().asFile
+	}
+
+	finalizedBy jacocoTestReport
+}
+
+integrationTest {
+	jacoco {
+		classDumpDir = layout.buildDirectory.dir('jacoco/integration/classpathdumps').get().asFile
+	}
+
+	finalizedBy jacocoTestReport
+}
+
+jacoco {
+	toolVersion = '0.8.11'
+}
+
+jacocoTestReport {
+	dependsOn test
+	sourceSets sourceSets.main
+	executionData fileTree(project.rootDir.absolutePath).include("build/jacoco/*.exec")
+
+	reports {
+		html.required = true
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"com/panopticode/openapi/**",
+					"com/panopticode/jooq/**"
+			])
+		}))
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.85
+			}
+		}
+
+		rule {
+			enabled = false
+			element = 'CLASS'
+			includes = ['com.panopticode.example.*']
+
+			limit {
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 0.3
+			}
+		}
+	}
+}
+
+bootRun {
+	systemProperties = System.properties
+}
+
+checkstyle {
+	toolVersion = '10.14.2'
+}
+
+//import com.github.spotbugs.snom.Confidence
+spotbugs {
+	toolVersion = '4.8.3'
+	ignoreFailures = false
+	showStackTraces = true
+	showProgress = true
+	effort = Effort.MAX
+//	reportLevel = Confidence.DEFAULT
+//	visitors = listOf("FindSqlInjection", "SwitchFallthrough")
+//	omitVisitors = listOf("FindNonShortCircuit")
+//	reportsDir = file("$buildDir/spotbugs")
+//	includeFilter = file("include.xml")
+	excludeFilter = file("$projectDir/config/spotbugs/exclude.xml")
+//	baselineFile = file("baseline.xml")
+//	onlyAnalyze = listOf("com.foobar.MyClass", "com.foobar.mypkg.*")
+//	maxHeapSize = "1g"
+//	extraArgs = listOf("-nested:false")
+//	jvmArgs = listOf("-Duser.language=ja")
+}
+
+tasks.spotbugsMain {
+	reports.create("html") {
+		required = true
+//		outputLocation = file("$buildDir/reports/spotbugs.html")
+		setStylesheet("fancy-hist.xsl")
+	}
+}
+
+// These should be passed via env vars that are known at deployment time
+flyway {
+	url = 'jdbc:postgresql://localhost:5432/example-db'
+	user = 'root'
+	password = 'local-dev-only'
+}
+
+tasks.register('bundleApiSpecs', Exec) {
+    description = 'Bundle all the api specs into one file'
+    group = 'OpenAPI Tools'
+
+    commandLine 'docker', 'run',
+            '--rm',
+            '-v', "$projectDir/api:/spec",
+            'redocly/cli:2.12.6',
+            'bundle',
+            'src/openapi.yaml',
+            '-o', 'dist/openapi.yaml'
+
+    outputs.file(layout.projectDirectory.file('api/dist/openapi.yaml'))
+}
+
+// This task is an internal utility and it's not polished
+// it reads the specs at api/cookbook/openapi.yaml and create the documents
+// inside api/cookbook/. The openapi.yaml rooted there needs to be
+// moved where the original was and all the $refs fixed.
+tasks.register('splitApiSpecs', Exec) {
+	description = 'Split the full API spec in the openapi.yaml'
+
+	commandLine 'docker', 'run',
+			'--rm',
+			'-v', "$projectDir/api:/spec",
+            'redocly/cli:2.12.6',
+			'split',
+            'dist/openapi.yaml',
+			'--outDir', 'src/cookbook'
+}
+
+tasks.register('checkOpenApiContract', Exec) {
+    mkdir 'build/openApiCheck'
+
+    commandLine 'scripts/openapi-check.sh'
+}
+
+tasks.named('check') {
+    dependsOn(checkOpenApiContract)
+}
+
+openApiValidate {
+    inputSpec.set("$projectDir/api/src/openapi.yaml")
+	recommend.set(true)
+}
+
+tasks.named('openApiValidate') {
+	dependsOn(bundleApiSpecs)
+}
+
+openApiGenerate {
+	verbose.set(true)
+	generatorName.set('spring')
+	outputDir.set("$projectDir")
+    inputSpecRootDirectory.set("$projectDir/api/dist")
+    inputSpec.set("$projectDir/api/dist/openapi.yaml")
+	invokerPackage.set('com.panopticode.openapi')
+	apiPackage.set('com.panopticode.openapi.api')
+	modelPackage.set('com.panopticode.openapi.model')
+	configOptions = [
+			useSpringBoot3      : 'true',
+			delegatePattern     : 'true',
+			useTags             : 'true',
+			library             : 'spring-boot',
+			requestMappingMode  : 'controller',
+			booleanGetterPrefix : 'is',
+			configPackage       : 'com.panopticode.openapi.configuration',
+			sourceFolder        : 'src/main/java/generated',
+			title               : 'java-spring-boot-ms-template_OpenAPI',
+	]
+}
+
+tasks.named('openApiGenerate') {
+	dependsOn(bundleApiSpecs)
+}
+
+tasks.register('generateDocs', GenerateTask) {
+	description = 'Generate html documentation of the java-spring-boot-ms-template public API using the OpenAPI engine.'
+	group = 'OpenAPI Tools'
+
+	dependsOn bundleApiSpecs
+	generatorName.set('html2')
+	outputDir.set("$projectDir/docs")
+    inputSpec.set("$projectDir/api/dist/openapi.yaml")
+	configOptions = [
+			appName        : 'java-spring-boot-ms-template',
+			appDescription : 'A template code base for a java Spring Boot micro-service, with database versioning, a RESTful API defined and documented using OpenAPI and a compelling test suite.',
+			artifactVersion: '1.0.0',
+			infoEmail      : 'sink@etlgr.com',
+			infoUrl        : 'https://www.wikipedia.org',
+			licenseInfo    : 'GPL v3',
+			licenseUrl     : 'https://www.gnu.org/licenses/gpl-3.0.en.html',
+	]
+}
+
+tasks.register('printSourceSetInformation') {
+	description = 'Print information about the source sets in this project and their classpaths.'
+	group = 'Help'
+
+	doLast{
+		sourceSets.each { srcSet ->
+			println "["+srcSet.name+"]"
+			print "-->Source directories: "+srcSet.allJava.srcDirs+"\n"
+			print "-->Output directories: "+srcSet.output.classesDirs.files+"\n"
+			print "-->Compile classpath:\n"
+			srcSet.compileClasspath.files.each {
+				print "  "+it.path+"\n"
+			}
+			println ""
+		}
+	}
+}

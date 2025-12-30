@@ -1,0 +1,19 @@
+description: Recipe ingredient
+type: object
+required:
+  - name
+  - index
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  index:
+    type: integer
+    format: int32
+  quantity:
+    type: number
+    format: float
+  unit:
+    type: string

@@ -1,0 +1,10 @@
+description: Generic error
+type: object
+required:
+  - code
+  - message
+properties:
+  code:
+    type: integer
+  message:
+    type: string

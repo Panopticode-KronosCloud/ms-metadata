@@ -1,0 +1,11 @@
+description: Reference to a recipe (id and title)
+type: object
+required:
+  - id
+  - title
+properties:
+  id:
+    type: string
+    format: uuid
+  title:
+    type: string

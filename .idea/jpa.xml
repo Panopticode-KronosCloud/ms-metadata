@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+  </component>
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit moduleName="java-spring-boot-ms-template" name="Default" />
+      <persistence-unit moduleName="java-spring-boot-ms-template.integrationTest" name="Default" />
+    </persistence-units>
+  </component>
+</project>

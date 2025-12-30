@@ -1,0 +1,49 @@
+openapi: 3.0.0
+
+info:
+  title: java-spring-boot-ms-template
+  description: >-
+    java-spring-boot-ms-template
+
+    This is the public API to interact with your webapp, based on the
+    OpenAPI 3.0 specification.
+  termsOfService: https://twitter.com/en/tos
+  contact:
+    name: API Support
+    url: https://www.begambleaware.org/
+    email: sink@etlgr.com
+  license:
+    name: GPL 3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:{port}/api
+    description: Local development container
+    variables:
+      port:
+        enum:
+          - '8080'
+          - '8081'
+        default: '8081'
+
+tags:
+  - name: cookbook
+    description: Manage a recipe catalog
+    externalDocs:
+      description: Find out more
+      url: https://en.wikipedia.org/wiki/Cookbook
+
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+
+paths:
+  /recipes:
+    $ref: cookbook/paths/recipes.yaml
+  /recipes/{recipeId}:
+    $ref: cookbook/paths/recipes_{recipeId}.yaml
+  /recipes/{recipeId}/ingredients:
+    $ref: cookbook/paths/recipes_{recipeId}_ingredients.yaml
+  /recipes/{recipeId}/ingredients/{ingredientId}:
+    $ref: cookbook/paths/recipes_{recipeId}_ingredients_{ingredientId}.yaml

@@ -1,0 +1,168 @@
+jooq {
+    configuration {
+
+        // Configure the database connection here
+        jdbc {
+            driver = "org.postgresql.Driver"
+            url = "jdbc:postgresql://localhost:5432/java-spring-boot-ms-template-db"
+            user = "local-dev-only"
+            password = "local-dev-only"
+
+            // You can also pass user/password and other JDBC properties in the optional properties tag:
+//        properties {
+//            property {
+//                key = "user"
+//                value = "[db-user]"
+//            }
+//            property {
+//                key = "password"
+//                value = "[db-password]"
+//            }
+//        }
+        }
+        generator {
+            database {
+
+                // The database dialect from jooq-meta. Available dialects are
+                // named org.jooq.meta.[database].[database]Database.
+                //
+                // Natively supported values are:
+                //
+                // org.jooq.meta.ase.ASEDatabase
+                // org.jooq.meta.auroramysql.AuroraMySQLDatabase
+                // org.jooq.meta.aurorapostgres.AuroraPostgresDatabase
+                // org.jooq.meta.cockroachdb.CockroachDBDatabase
+                // org.jooq.meta.db2.DB2Database
+                // org.jooq.meta.derby.DerbyDatabase
+                // org.jooq.meta.firebird.FirebirdDatabase
+                // org.jooq.meta.h2.H2Database
+                // org.jooq.meta.hana.HANADatabase
+                // org.jooq.meta.hsqldb.HSQLDBDatabase
+                // org.jooq.meta.ignite.IgniteDatabase
+                // org.jooq.meta.informix.InformixDatabase
+                // org.jooq.meta.ingres.IngresDatabase
+                // org.jooq.meta.mariadb.MariaDBDatabase
+                // org.jooq.meta.mysql.MySQLDatabase
+                // org.jooq.meta.oracle.OracleDatabase
+                // org.jooq.meta.postgres.PostgresDatabase
+                // org.jooq.meta.redshift.RedshiftDatabase
+                // org.jooq.meta.snowflake.SnowflakeDatabase
+                // org.jooq.meta.sqldatawarehouse.SQLDataWarehouseDatabase
+                // org.jooq.meta.sqlite.SQLiteDatabase
+                // org.jooq.meta.sqlserver.SQLServerDatabase
+                // org.jooq.meta.sybase.SybaseDatabase
+                // org.jooq.meta.teradata.TeradataDatabase
+                // org.jooq.meta.trino.TrinoDatabase
+                // org.jooq.meta.vertica.VerticaDatabase
+                //
+                // This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access)
+                //
+                // org.jooq.meta.jdbc.JDBCDatabase
+                //
+                // This value can be used to reverse-engineer standard jOOQ-meta XML formats
+                //
+                // org.jooq.meta.xml.XMLDatabase
+                //
+                // This value can be used to reverse-engineer schemas defined by SQL files
+                // (requires jooq-meta-extensions dependency)
+                //
+                // org.jooq.meta.extensions.ddl.DDLDatabase
+                //
+                // This value can be used to reverse-engineer schemas defined by JPA annotated entities
+                // (requires jooq-meta-extensions-hibernate dependency)
+                //
+                // org.jooq.meta.extensions.jpa.JPADatabase
+                //
+                // This value can be used to reverse-engineer schemas defined by Liquibase migration files
+                // (requires jooq-meta-extensions-liquibase dependency)
+                //
+                // org.jooq.meta.extensions.liquibase.LiquibaseDatabase
+                //
+                // You can also provide your own org.jooq.meta.Database implementation
+                // here, if your database is currently not supported
+                name = "org.jooq.meta.postgres.PostgresDatabase"
+
+                // All elements that are generated from your schema (A Java regular expression.
+                // Use the pipe to separate several expressions) Watch out for
+                // case-sensitivity. Depending on your database, this might be
+                // important!
+                //
+                // You can create case-insensitive regular expressions using this syntax: (?i:expr)
+                //
+                // Whitespace is ignored and comments are possible.
+                includes = ".*"
+
+                // All elements that are excluded from your schema (A Java regular expression.
+                // Use the pipe to separate several expressions). Excludes match before
+                // includes, i.e. excludes have a higher priority
+                excludes = "pg_catalog.* | flyway_schema_history"
+//                        """
+//                UNUSED_TABLE                # This table (unqualified name) should not be generated
+//                | PREFIX_.*                   # Objects with a given prefix should not be generated
+//                | SECRET_SCHEMA\.SECRET_TABLE # This table (qualified name) should not be generated
+//                | SECRET_ROUTINE              # This routine (unqualified name) ...
+//            """
+
+                // The schema that is used locally as a source for meta information.
+                // This could be your development schema or the production schema, etc
+                // This cannot be combined with the schemata element.
+                //
+                // If left empty, jOOQ will generate all available schemata. See the
+                // manual's next section to learn how to generate several schemata
+                inputSchema = "cookbook"
+
+                // Example forced type
+//                forcedTypes {
+//                    forcedType {
+//                        userType = "com.panopticode.example.persistence.dto.Difficulty"
+//                        converter = "com.panopticode.example.persistence.converter.DifficultyEnumConverter"
+//
+//                        // A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions.
+//                        includeExpression = ".*\\.difficulty"
+//
+//                        objectType = "COLUMN"
+//                        nullability = "NOT_NULL"
+//                    }
+//                }
+            }
+
+            // Generation flags: See advanced configuration properties
+            generate {
+                // Generate the DAO classes
+                daos = true
+
+                // Annotate DAOs (and other types) with spring annotations, such as @Repository and @Autowired
+                // for auto-wiring the Configuration instance, e.g. from Spring Boot's jOOQ starter
+                springAnnotations = true
+                // Generate Spring-specific DAOs containing @Transactional annotations
+                springDao = true
+                // Add @Generated to help filter out classes for some tools (e.g. test coverage)
+                generatedAnnotation = true
+                generatedAnnotationType = "ORG_JOOQ_GENERATED"
+                generatedAnnotationDate = true
+                generatedAnnotationJooqVersion = true
+                nullableAnnotation = true
+                nullableAnnotationType = "jakarta.annotation.Nullable"
+                nonnullAnnotation = true
+                nonnullAnnotationType = "jakarta.validation.constraints.NotNull"
+                validationAnnotations = true
+
+                pojosAsJavaRecordClasses = true
+            }
+
+            target {
+
+                // The destination package of your generated classes (within the
+                // destination directory)
+                //
+                // jOOQ may append the schema name to this package if generating multiple schemas,
+                // e.g. org.jooq.your.packagename.schema1
+                // org.jooq.your.packagename.schema2
+                packageName = "com.panopticode.jooq"
+
+                // The destination directory of your generated classes
+                directory = "./src/main/java/generated"
+            }
+        }
+    }
+}

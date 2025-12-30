@@ -1,0 +1,16 @@
+src/main/java/generated/com/panopticode/openapi/RFC3339DateFormat.java
+src/main/java/generated/com/panopticode/openapi/api/ApiUtil.java
+src/main/java/generated/com/panopticode/openapi/api/CookbookApi.java
+src/main/java/generated/com/panopticode/openapi/api/CookbookApiController.java
+src/main/java/generated/com/panopticode/openapi/api/CookbookApiDelegate.java
+src/main/java/generated/com/panopticode/openapi/configuration/EnumConverterConfiguration.java
+src/main/java/generated/com/panopticode/openapi/configuration/HomeController.java
+src/main/java/generated/com/panopticode/openapi/configuration/SpringDocConfiguration.java
+src/main/java/generated/com/panopticode/openapi/model/Difficulty.java
+src/main/java/generated/com/panopticode/openapi/model/ErrorModel.java
+src/main/java/generated/com/panopticode/openapi/model/Ingredient.java
+src/main/java/generated/com/panopticode/openapi/model/OptionalRecipeBody.java
+src/main/java/generated/com/panopticode/openapi/model/Recipe.java
+src/main/java/generated/com/panopticode/openapi/model/RecipeRef.java
+src/main/java/generated/com/panopticode/openapi/model/RequiredRecipeBody.java
+src/main/java/generated/com/panopticode/openapi/model/UpdateRecipeRequest.java
