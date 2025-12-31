@@ -4,7 +4,7 @@ jooq {
         // Configure the database connection here
         jdbc {
             driver = "org.postgresql.Driver"
-            url = "jdbc:postgresql://localhost:5432/java-spring-boot-ms-template-db"
+            url = "jdbc:postgresql://localhost:5432/metadata-microservice-db"
             user = "local-dev-only"
             password = "local-dev-only"
 

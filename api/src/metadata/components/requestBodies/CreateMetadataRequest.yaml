@@ -1,0 +1,45 @@
+description: Data object to save a new recipe
+required: true
+content:
+  application/json:
+    schema:
+      description: Metadata record
+      type: object
+      required:
+        - id
+        - kind
+        - name
+        - created
+        - last_modified
+      properties:
+        id:
+          type: string
+          format: uuid
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+        kind:
+          type: string
+          enum:
+            - file
+            - directory
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        last_modified:
+          type: string
+          format: date-time
+        suggested_media_type:
+          description: Suggested media type. Might be refined automatically.
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        raw_access:
+          type: boolean
+          default: false

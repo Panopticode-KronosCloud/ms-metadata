@@ -1,12 +1,11 @@
-openapi: 3.0.0
-
+openapi: 3.0.3
 info:
-  title: java-spring-boot-ms-template
+  title: metadata-microservice
   description: >-
-    java-spring-boot-ms-template
+    metadata-microservice
 
-    This is the public API to interact with your webapp, based on the
-    OpenAPI 3.0 specification.
+    This is the public API to interact with your webapp, based on the OpenAPI
+    3.0 specification.
   termsOfService: https://twitter.com/en/tos
   contact:
     name: API Support
@@ -18,32 +17,27 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:{port}/api
+  - url: http://localhost:{port}/api/v1/metadata
     description: Local development container
     variables:
       port:
         enum:
           - '8080'
-          - '8081'
-        default: '8081'
+        default: '8080'
+  - url: https://raspberrypi.tigon-court.ts.net/api/v1/metadata
+    description: Production server
 
 tags:
-  - name: cookbook
-    description: Manage a recipe catalog
+  - name: metadata
+    description: Manage files and directories metadata
     externalDocs:
       description: Find out more
-      url: https://en.wikipedia.org/wiki/Cookbook
+      url: https://en.wikipedia.org/wiki/Metadata
 
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 
 paths:
-  /recipes:
-    $ref: cookbook/paths/recipes.yaml
-  /recipes/{recipeId}:
-    $ref: cookbook/paths/recipes_{recipeId}.yaml
-  /recipes/{recipeId}/ingredients:
-    $ref: cookbook/paths/recipes_{recipeId}_ingredients.yaml
-  /recipes/{recipeId}/ingredients/{ingredientId}:
-    $ref: cookbook/paths/recipes_{recipeId}_ingredients_{ingredientId}.yaml
+  /nodes:
+    $ref: metadata/paths/nodes.yaml

@@ -1,12 +1,8 @@
 package com.panopticode.openapi.api;
 
+import com.panopticode.openapi.model.CreateMetadataRequest;
 import com.panopticode.openapi.model.ErrorModel;
-import com.panopticode.openapi.model.Ingredient;
-import com.panopticode.openapi.model.Recipe;
-import com.panopticode.openapi.model.RecipeRef;
-import com.panopticode.openapi.model.RequiredRecipeBody;
-import java.util.UUID;
-import com.panopticode.openapi.model.UpdateRecipeRequest;
+import com.panopticode.openapi.model.Metadata;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +27,19 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-28T03:09:42.850562636Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-31T15:08:48.518121375Z[Europe/London]", comments = "Generator version: 7.18.0")
 @Controller
-@RequestMapping("${openapi.java-spring-boot-ms-template_OpenAPI.base-path:/api}")
-public class CookbookApiController implements CookbookApi {
+@RequestMapping("${openapi.metadata-microservice_OpenAPI.base-path:/api/v1/metadata}")
+public class MetadataApiController implements MetadataApi {
 
-    private final CookbookApiDelegate delegate;
+    private final MetadataApiDelegate delegate;
 
-    public CookbookApiController(@Autowired(required = false) CookbookApiDelegate delegate) {
-        this.delegate = Optional.ofNullable(delegate).orElse(new CookbookApiDelegate() {});
+    public MetadataApiController(@Autowired(required = false) MetadataApiDelegate delegate) {
+        this.delegate = Optional.ofNullable(delegate).orElse(new MetadataApiDelegate() {});
     }
 
     @Override
-    public CookbookApiDelegate getDelegate() {
+    public MetadataApiDelegate getDelegate() {
         return delegate;
     }
 

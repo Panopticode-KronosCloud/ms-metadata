@@ -1,6 +1,0 @@
-description: Recipe difficulty
-type: string
-enum:
-  - easy
-  - medium
-  - hard

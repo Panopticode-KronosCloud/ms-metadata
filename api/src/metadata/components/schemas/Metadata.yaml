@@ -1,0 +1,67 @@
+description: Metadata record
+type: object
+required:
+  - id
+  - kind
+  - name
+  - created
+  - last_modified
+  - raw_access
+  - status
+properties:
+  id:
+    type: string
+    format: uuid
+  parent_id:
+    type: string
+    format: uuid
+    nullable: true
+  kind:
+    type: string
+    enum:
+      - file
+      - directory
+  blob_type:
+    type: string
+    nullable: true
+  blob_ref:
+    type: string
+    nullable: true
+  name:
+    type: string
+  created:
+    type: string
+    format: date-time
+  last_modified:
+    type: string
+    format: date-time
+  size_b:
+    type: integer
+    format: int64
+    nullable: true
+  media_type:
+    type: string
+    nullable: true
+  metadata:
+    type: object
+    additionalProperties: true
+    nullable: true
+  hash_sha3_256:
+    type: string
+    nullable: true
+  thumbnail:
+    type: string
+    nullable: true
+  consolidate_v:
+    type: string
+    nullable: true
+  raw_access:
+    type: boolean
+    default: false
+  status:
+    type: string
+    enum:
+      - unavailable
+      - deleted
+      - staged
+      - ready

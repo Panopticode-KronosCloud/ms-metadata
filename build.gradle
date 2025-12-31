@@ -319,7 +319,7 @@ openApiGenerate {
 			booleanGetterPrefix : 'is',
 			configPackage       : 'com.panopticode.openapi.configuration',
 			sourceFolder        : 'src/main/java/generated',
-			title               : 'java-spring-boot-ms-template_OpenAPI',
+			title               : 'metadata-microservice_OpenAPI',
 	]
 }
 
@@ -328,7 +328,7 @@ tasks.named('openApiGenerate') {
 }
 
 tasks.register('generateDocs', GenerateTask) {
-	description = 'Generate html documentation of the java-spring-boot-ms-template public API using the OpenAPI engine.'
+	description = 'Generate html documentation of the metadata-microservice public API using the OpenAPI engine.'
 	group = 'OpenAPI Tools'
 
 	dependsOn bundleApiSpecs
@@ -336,8 +336,8 @@ tasks.register('generateDocs', GenerateTask) {
 	outputDir.set("$projectDir/docs")
     inputSpec.set("$projectDir/api/dist/openapi.yaml")
 	configOptions = [
-			appName        : 'java-spring-boot-ms-template',
-			appDescription : 'A template code base for a java Spring Boot micro-service, with database versioning, a RESTful API defined and documented using OpenAPI and a compelling test suite.',
+			appName        : 'metadata-microservice',
+			appDescription : 'A service responsible for keeping metadata about the entities stored in the system.',
 			artifactVersion: '1.0.0',
 			infoEmail      : 'sink@etlgr.com',
 			infoUrl        : 'https://www.wikipedia.org',

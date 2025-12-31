@@ -1,7 +1,9 @@
-# Java Spring Boot micro-service template
+# Metadata microservice
 
-A template code base for a java Spring Boot micro-service, with database versioning, a RESTful API defined and documented
-using OpenAPI and a compelling test suite.
+The metadata service is responsible for storing, managing, and serving structured metadata about files and directories,
+independent of the underlying binary storage.
+It provides a stable API for querying, organising, and evolving file metadata (such as hierarchy, timestamps, and custom
+attributes) while allowing the physical file contents to be stored and accessed separately.
 
 ## Development resources
 
@@ -48,7 +50,7 @@ rm -rf src/main/java/generated/com/panopticode/openapi
 - Consumers must depend only on `dist/openapi.yaml`
 
 A consumer of this API is supposed to generate a client using the manifest
-`https://raw.githubusercontent.com/Phortran/java-spring-boot-ms-template/refs/tags/vx.y.z/api/dist/openapi.yaml`, taking care
+`https://raw.githubusercontent.com/Phortran/metadata-microservice/refs/tags/vx.y.z/api/dist/openapi.yaml`, taking care
 of replacing `x.y.z` with an actual version. **IMPORTANT! Only refer to version tags for stability and reproducibility**.
 
 #### API Docs
