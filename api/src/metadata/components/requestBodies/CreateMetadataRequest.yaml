@@ -1,4 +1,4 @@
-description: Data object to save a new recipe
+description: Data object to save a new metadata entry
 required: true
 content:
   application/json:
@@ -6,15 +6,11 @@ content:
       description: Metadata record
       type: object
       required:
-        - id
         - kind
         - name
         - created
         - last_modified
       properties:
-        id:
-          type: string
-          format: uuid
         parent_id:
           type: string
           format: uuid

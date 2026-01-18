@@ -845,13 +845,9 @@ ul.nav-tabs {
     // Script section to load models into a JS Var
     var defs = {}
     defs["createMetadata_request"] = {
-  "required" : [ "created", "id", "kind", "last_modified", "name" ],
+  "required" : [ "created", "kind", "last_modified", "name" ],
   "type" : "object",
   "properties" : {
-    "id" : {
-      "type" : "string",
-      "format" : "uuid"
-    },
     "parent_id" : {
       "type" : "string",
       "format" : "uuid",
@@ -1288,11 +1284,11 @@ pub fn main() {
                               </tr>
                                 <tr><td style="width:150px;">createMetadataRequest <span style="color:red;">*</span></td>
 <td>
-<p class="marked">Data object to save a new recipe</p>
+<p class="marked">Data object to save a new metadata entry</p>
 <script>
 $(document).ready(function() {
   var schemaWrapper = {
-  "description" : "Data object to save a new recipe",
+  "description" : "Data object to save a new metadata entry",
   "content" : {
     "application/json" : {
       "schema" : {

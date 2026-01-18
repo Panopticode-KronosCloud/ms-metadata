@@ -31,6 +31,15 @@ rm -rf ./src/main/java/generated/com/panopticode/jooq
 ./gradlew jooqCodegen
 ```
 
+> [!INFO]
+> Do not worry if you see a warning during code generation on the lines of
+> ```shell
+> > Task :jooqCodegen
+> Ambiguous key name       : The one-to-many key metadata.entity_parent_id_fkey generates an inbound key method name entity
+> on table metadata.entity which conflicts with the previously generated key method name for key metadata.entity_parent_id_fkey.
+> ```
+> The explanation is given [here](https://stackoverflow.com/a/77677816), and it can be safely ignored.
+
 ### API
 
 The API specification is in the `api` folder and follows the OpenAPI v3 model. Controllers are generate with

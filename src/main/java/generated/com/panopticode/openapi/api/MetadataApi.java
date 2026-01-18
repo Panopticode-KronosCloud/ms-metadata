@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-31T15:08:48.518121375Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-18T01:57:44.127371827Z[Europe/London]", comments = "Generator version: 7.18.0")
 @Validated
 @Tag(name = "metadata", description = "the metadata API")
 public interface MetadataApi {
@@ -45,7 +45,7 @@ public interface MetadataApi {
      * POST /nodes : Create new metadata record
      * Create new metadata record
      *
-     * @param createMetadataRequest Data object to save a new recipe (required)
+     * @param createMetadataRequest Data object to save a new metadata entry (required)
      * @return successful operation (status code 201)
      *         or Invalid input (status code 405)
      *         or Unexpected error (status code 200)
@@ -74,7 +74,7 @@ public interface MetadataApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<Metadata> createMetadata(
-        @Parameter(name = "CreateMetadataRequest", description = "Data object to save a new recipe", required = true) @Valid @RequestBody CreateMetadataRequest createMetadataRequest
+        @Parameter(name = "CreateMetadataRequest", description = "Data object to save a new metadata entry", required = true) @Valid @RequestBody CreateMetadataRequest createMetadataRequest
     ) {
         return getDelegate().createMetadata(createMetadataRequest);
     }

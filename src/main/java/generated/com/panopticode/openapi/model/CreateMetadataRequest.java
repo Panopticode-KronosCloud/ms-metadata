@@ -31,10 +31,8 @@ import jakarta.annotation.Generated;
 
 @Schema(name = "createMetadata_request", description = "Metadata record")
 @JsonTypeName("createMetadata_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-31T15:08:48.518121375Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-18T01:57:44.127371827Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class CreateMetadataRequest {
-
-  private UUID id;
 
   private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
 
@@ -97,32 +95,11 @@ public class CreateMetadataRequest {
   /**
    * Constructor with only required parameters
    */
-  public CreateMetadataRequest(UUID id, KindEnum kind, String name, OffsetDateTime created, OffsetDateTime lastModified) {
-    this.id = id;
+  public CreateMetadataRequest(KindEnum kind, String name, OffsetDateTime created, OffsetDateTime lastModified) {
     this.kind = kind;
     this.name = name;
     this.created = created;
     this.lastModified = lastModified;
-  }
-
-  public CreateMetadataRequest id(UUID id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-   */
-  @NotNull @Valid 
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("id")
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
   }
 
   public CreateMetadataRequest parentId(UUID parentId) {
@@ -302,8 +279,7 @@ public class CreateMetadataRequest {
       return false;
     }
     CreateMetadataRequest createMetadataRequest = (CreateMetadataRequest) o;
-    return Objects.equals(this.id, createMetadataRequest.id) &&
-        equalsNullable(this.parentId, createMetadataRequest.parentId) &&
+    return equalsNullable(this.parentId, createMetadataRequest.parentId) &&
         Objects.equals(this.kind, createMetadataRequest.kind) &&
         Objects.equals(this.name, createMetadataRequest.name) &&
         Objects.equals(this.created, createMetadataRequest.created) &&
@@ -319,7 +295,7 @@ public class CreateMetadataRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, hashCodeNullable(parentId), kind, name, created, lastModified, hashCodeNullable(suggestedMediaType), hashCodeNullable(metadata), rawAccess);
+    return Objects.hash(hashCodeNullable(parentId), kind, name, created, lastModified, hashCodeNullable(suggestedMediaType), hashCodeNullable(metadata), rawAccess);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -333,7 +309,6 @@ public class CreateMetadataRequest {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateMetadataRequest {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

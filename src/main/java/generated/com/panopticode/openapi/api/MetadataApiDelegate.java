@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link MetadataApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-31T15:08:48.518121375Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-18T01:57:44.127371827Z[Europe/London]", comments = "Generator version: 7.18.0")
 public interface MetadataApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -31,7 +31,7 @@ public interface MetadataApiDelegate {
      * POST /nodes : Create new metadata record
      * Create new metadata record
      *
-     * @param createMetadataRequest Data object to save a new recipe (required)
+     * @param createMetadataRequest Data object to save a new metadata entry (required)
      * @return successful operation (status code 201)
      *         or Invalid input (status code 405)
      *         or Unexpected error (status code 200)

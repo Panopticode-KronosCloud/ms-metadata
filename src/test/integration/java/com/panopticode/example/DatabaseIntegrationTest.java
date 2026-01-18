@@ -18,14 +18,17 @@
 
 package com.panopticode.example;
 
-import com.panopticode.jooq.tables.daos.RecipeDao;
-import com.panopticode.jooq.tables.pojos.Recipe;
+import com.panopticode.jooq.enums.KindType;
+import com.panopticode.jooq.enums.StatusType;
+import com.panopticode.jooq.tables.daos.EntityDao;
+import com.panopticode.jooq.tables.pojos.Entity;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlMergeMode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,50 +40,55 @@ public class DatabaseIntegrationTest
     extends AbstractIntegrationTestBase
 {
     @Autowired
-    private RecipeDao _recipeDao;
+    private EntityDao _entityDao;
 
     @Test
-    @Sql(value = "/sql/create_recipes.sql")
+    @Sql(value = "/sql/create_metadata.sql")
     @SqlMergeMode(MERGE)
-    public void testGetAllRecipes_happyPath()
+    public void testGetAllMetadata_happyPath()
     {
         // When
-        final var recipes = _recipeDao.findAll();
+        final var entities = _entityDao.findAll();
 
         // Then
         // just checking the titles
-        assertThat(recipes.stream().map(Recipe::name).toList())
+        assertThat(entities.stream().map(Entity::name).toList())
                 .hasSameElementsAs(List.of(
-                        "Recipe 1",
-                        "Another fantastic recipe",
-                        "A disgusting soup"));
+                        "test directory",
+                        "test file.png"));
     }
 
     @Test
-    @Sql(value = "/sql/create_recipes.sql")
+    @Sql(value = "/sql/create_metadata.sql")
     @SqlMergeMode(MERGE)
-    public void testGetRecipeById_happyPath()
+    public void testGetMetadataById_happyPath()
     {
+        // Given
+        final var existingId = _entityDao.findAll().getFirst().id();
+
         // When
-        final var recipe = _recipeDao.findById(_recipeDao.findAll().getFirst().id());
+        final var entity = _entityDao.findById(existingId);
 
         // Then
-        assertThat(recipe)
+        assertThat(entity)
                 .usingRecursiveComparison()
                 .ignoringFieldsOfTypes(UUID.class)
-                .isEqualTo(new Recipe(
+                .isEqualTo(new Entity(
+                        existingId,
                         null,
-                        "Recipe 1",
-                        4,
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget ullamcorper enim. "
-                                + "Nulla pharetra neque arcu, vitae sagittis augue auctor non. Nulla bibendum risus eget diam "
-                                + "bibendum maximus.",
+                        KindType.directory,
                         null,
                         null,
-                        "medium",
-                        20,
+                        "test directory",
+                        LocalDateTime.of(2004, 10, 19, 10, 23, 54),
+                        LocalDateTime.of(2012, 1, 23, 16, 11, 3),
                         null,
-                        "Vestibulum lectus nisl, convallis placerat massa at, lacinia vestibulum mi. "
-                                + "Mauris consectetur ipsum eu lobortis feugiat."));
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        false,
+                        StatusType.ready));
     }
 }

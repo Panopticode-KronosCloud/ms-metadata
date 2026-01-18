@@ -1,2 +1,1 @@
-DELETE FROM cookbook.recipe;
-DELETE FROM cookbook.ingredient;
+DELETE FROM metadata.entity;
