@@ -49,6 +49,8 @@ dependencies {
 	implementation libs.bundles.logback
 	implementation libs.p6spy
 
+	// ValidCheck
+	implementation libs.validcheck
 
 	// Spring
 	implementation libs.bundles.spring.boot
@@ -58,10 +60,14 @@ dependencies {
 	implementation libs.flyway.core
 	implementation libs.flyway.postgres
 	implementation libs.jooq
+	implementation libs.jooq.jackson.ext
 
 	// Additional dependencies for OpenAPI
 	implementation libs.openapi.jack
 	implementation libs.springdoc.openapi.ui
+
+	// General
+	implementation libs.commons.io
 
 	developmentOnly testLibs.spring.boot.docker
 	developmentOnly testLibs.spring.boot.devtools
@@ -197,7 +203,7 @@ jacocoTestCoverageVerification {
 		rule {
 			enabled = false
 			element = 'CLASS'
-			includes = ['com.panopticode.example.*']
+			includes = ['com.panopticode.metadata.*']
 
 			limit {
 				counter = 'LINE'
@@ -246,7 +252,7 @@ tasks.spotbugsMain {
 
 // These should be passed via env vars that are known at deployment time
 flyway {
-	url = 'jdbc:postgresql://localhost:5432/example-db'
+	url = 'jdbc:postgresql://localhost:5432/metadata-db'
 	user = 'root'
 	password = 'local-dev-only'
 }

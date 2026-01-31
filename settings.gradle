@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         libs {
-            from('com.panopticode:spring-boot-ms-version-catalog:1.1.1')
+            from('com.panopticode:spring-boot-ms-version-catalog:1.2.0')
         }
         testLibs {
             from('com.panopticode:ms-test-version-catalog:1.0.5')

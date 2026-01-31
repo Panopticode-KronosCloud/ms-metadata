@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.panopticode.openapi.model.Kind;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,47 +32,12 @@ import jakarta.annotation.Generated;
 
 @Schema(name = "createMetadata_request", description = "Metadata record")
 @JsonTypeName("createMetadata_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-18T01:57:44.127371827Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-26T19:03:14.882484979Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class CreateMetadataRequest {
 
   private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
 
-  /**
-   * Gets or Sets kind
-   */
-  public enum KindEnum {
-    FILE("file"),
-    
-    DIRECTORY("directory");
-
-    private final String value;
-
-    KindEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static KindEnum fromValue(String value) {
-      for (KindEnum b : KindEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private KindEnum kind;
+  private Kind kind;
 
   private String name;
 
@@ -95,7 +61,7 @@ public class CreateMetadataRequest {
   /**
    * Constructor with only required parameters
    */
-  public CreateMetadataRequest(KindEnum kind, String name, OffsetDateTime created, OffsetDateTime lastModified) {
+  public CreateMetadataRequest(Kind kind, String name, OffsetDateTime created, OffsetDateTime lastModified) {
     this.kind = kind;
     this.name = name;
     this.created = created;
@@ -122,7 +88,7 @@ public class CreateMetadataRequest {
     this.parentId = parentId;
   }
 
-  public CreateMetadataRequest kind(KindEnum kind) {
+  public CreateMetadataRequest kind(Kind kind) {
     this.kind = kind;
     return this;
   }
@@ -131,14 +97,14 @@ public class CreateMetadataRequest {
    * Get kind
    * @return kind
    */
-  @NotNull 
+  @NotNull @Valid 
   @Schema(name = "kind", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("kind")
-  public KindEnum getKind() {
+  public Kind getKind() {
     return kind;
   }
 
-  public void setKind(KindEnum kind) {
+  public void setKind(Kind kind) {
     this.kind = kind;
   }
 

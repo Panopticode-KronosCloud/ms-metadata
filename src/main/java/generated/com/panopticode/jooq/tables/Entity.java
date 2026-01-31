@@ -4,31 +4,35 @@
 package com.panopticode.jooq.tables;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.panopticode.jooq.Indexes;
 import com.panopticode.jooq.Keys;
 import com.panopticode.jooq.Metadata;
 import com.panopticode.jooq.enums.KindType;
 import com.panopticode.jooq.enums.StatusType;
-import com.panopticode.jooq.enums.StorageType;
 import com.panopticode.jooq.tables.Entity.EntityPath;
+import com.panopticode.jooq.tables.EntityConsolidation.EntityConsolidationPath;
+import com.panopticode.jooq.tables.EntityHash.EntityHashPath;
+import com.panopticode.jooq.tables.EntityStorage.EntityStoragePath;
+import com.panopticode.jooq.tables.EntityThumbnail.EntityThumbnailPath;
 import com.panopticode.jooq.tables.records.EntityRecord;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Generated;
 import org.jooq.Index;
 import org.jooq.InverseForeignKey;
-import org.jooq.JSONB;
 import org.jooq.Name;
 import org.jooq.Path;
 import org.jooq.PlainSQL;
@@ -43,8 +47,10 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter;
 
 
 /**
@@ -92,34 +98,29 @@ public class Entity extends TableImpl<EntityRecord> {
     public final TableField<EntityRecord, KindType> KIND = createField(DSL.name("kind"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(KindType.class), this, "");
 
     /**
-     * The column <code>metadata.entity.blob_storage</code>.
-     */
-    public final TableField<EntityRecord, StorageType> BLOB_STORAGE = createField(DSL.name("blob_storage"), SQLDataType.VARCHAR.asEnumDataType(StorageType.class), this, "");
-
-    /**
-     * The column <code>metadata.entity.blob_ref</code>.
-     */
-    public final TableField<EntityRecord, String> BLOB_REF = createField(DSL.name("blob_ref"), SQLDataType.CLOB, this, "");
-
-    /**
      * The column <code>metadata.entity.name</code>.
      */
     public final TableField<EntityRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
+     * The column <code>metadata.entity.extension</code>.
+     */
+    public final TableField<EntityRecord, String> EXTENSION = createField(DSL.name("extension"), SQLDataType.CLOB, this, "");
+
+    /**
      * The column <code>metadata.entity.created</code>.
      */
-    public final TableField<EntityRecord, LocalDateTime> CREATED = createField(DSL.name("created"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
+    public final TableField<EntityRecord, OffsetDateTime> CREATED = createField(DSL.name("created"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "");
 
     /**
      * The column <code>metadata.entity.last_modified</code>.
      */
-    public final TableField<EntityRecord, LocalDateTime> LAST_MODIFIED = createField(DSL.name("last_modified"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
+    public final TableField<EntityRecord, OffsetDateTime> LAST_MODIFIED = createField(DSL.name("last_modified"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "");
 
     /**
-     * The column <code>metadata.entity.size_b</code>.
+     * The column <code>metadata.entity.size_bytes</code>.
      */
-    public final TableField<EntityRecord, Long> SIZE_B = createField(DSL.name("size_b"), SQLDataType.BIGINT, this, "");
+    public final TableField<EntityRecord, Long> SIZE_BYTES = createField(DSL.name("size_bytes"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>metadata.entity.media_type</code>.
@@ -127,24 +128,9 @@ public class Entity extends TableImpl<EntityRecord> {
     public final TableField<EntityRecord, String> MEDIA_TYPE = createField(DSL.name("media_type"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>metadata.entity.metadata</code>.
+     * The column <code>metadata.entity.custom_metadata</code>.
      */
-    public final TableField<EntityRecord, JSONB> METADATA = createField(DSL.name("metadata"), SQLDataType.JSONB, this, "");
-
-    /**
-     * The column <code>metadata.entity.hash_sha3_256</code>.
-     */
-    public final TableField<EntityRecord, String> HASH_SHA3_256 = createField(DSL.name("hash_sha3_256"), SQLDataType.CLOB, this, "");
-
-    /**
-     * The column <code>metadata.entity.thumbnail</code>.
-     */
-    public final TableField<EntityRecord, String> THUMBNAIL = createField(DSL.name("thumbnail"), SQLDataType.CLOB, this, "");
-
-    /**
-     * The column <code>metadata.entity.consolidate_v</code>.
-     */
-    public final TableField<EntityRecord, String> CONSOLIDATE_V = createField(DSL.name("consolidate_v"), SQLDataType.CLOB, this, "");
+    public final TableField<EntityRecord, JsonNode> CUSTOM_METADATA = createField(DSL.name("custom_metadata"), SQLDataType.JSONB, this, "", new JSONBtoJacksonConverter<JsonNode>(JsonNode.class));
 
     /**
      * The column <code>metadata.entity.raw_access</code>.
@@ -234,7 +220,7 @@ public class Entity extends TableImpl<EntityRecord> {
     @Override
     @NotNull
     public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.IDX_BLOB_STORAGE_TYPE, Indexes.IDX_PARENT_ID);
+        return Arrays.asList(Indexes.IDX_PARENT_ID);
     }
 
     @Override
@@ -265,6 +251,66 @@ public class Entity extends TableImpl<EntityRecord> {
             _entity = new EntityPath(this, Keys.ENTITY__ENTITY_PARENT_ID_FKEY, null);
 
         return _entity;
+    }
+
+    private transient EntityConsolidationPath _entityConsolidation;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>metadata.entity_consolidation</code> table
+     */
+    public EntityConsolidationPath entityConsolidation() {
+        if (_entityConsolidation == null)
+            _entityConsolidation = new EntityConsolidationPath(this, null, Keys.ENTITY_CONSOLIDATION__ENTITY_CONSOLIDATION_ENTITY_ID_FKEY.getInverseKey());
+
+        return _entityConsolidation;
+    }
+
+    private transient EntityHashPath _entityHash;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>metadata.entity_hash</code> table
+     */
+    public EntityHashPath entityHash() {
+        if (_entityHash == null)
+            _entityHash = new EntityHashPath(this, null, Keys.ENTITY_HASH__ENTITY_HASH_ENTITY_ID_FKEY.getInverseKey());
+
+        return _entityHash;
+    }
+
+    private transient EntityStoragePath _entityStorage;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>metadata.entity_storage</code> table
+     */
+    public EntityStoragePath entityStorage() {
+        if (_entityStorage == null)
+            _entityStorage = new EntityStoragePath(this, null, Keys.ENTITY_STORAGE__ENTITY_STORAGE_ENTITY_ID_FKEY.getInverseKey());
+
+        return _entityStorage;
+    }
+
+    private transient EntityThumbnailPath _entityThumbnail;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>metadata.entity_thumbnail</code> table
+     */
+    public EntityThumbnailPath entityThumbnail() {
+        if (_entityThumbnail == null)
+            _entityThumbnail = new EntityThumbnailPath(this, null, Keys.ENTITY_THUMBNAIL__ENTITY_THUMBNAIL_ENTITY_ID_FKEY.getInverseKey());
+
+        return _entityThumbnail;
+    }
+
+    @Override
+    @NotNull
+    public List<Check<EntityRecord>> getChecks() {
+        return Arrays.asList(
+            Internal.createCheck(this, DSL.name("entity_check"), "((((kind = 'directory'::metadata.kind_type) AND (size_bytes IS NULL) AND (media_type = 'inode/directory'::text) AND (extension IS NULL)) OR (kind = 'file'::metadata.kind_type)))", true)
+        );
     }
 
     @Override

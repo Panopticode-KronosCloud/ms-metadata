@@ -3,8 +3,13 @@ src/main/java/generated/com/panopticode/openapi/api/ApiUtil.java
 src/main/java/generated/com/panopticode/openapi/api/MetadataApi.java
 src/main/java/generated/com/panopticode/openapi/api/MetadataApiController.java
 src/main/java/generated/com/panopticode/openapi/api/MetadataApiDelegate.java
+src/main/java/generated/com/panopticode/openapi/configuration/EnumConverterConfiguration.java
 src/main/java/generated/com/panopticode/openapi/configuration/HomeController.java
 src/main/java/generated/com/panopticode/openapi/configuration/SpringDocConfiguration.java
 src/main/java/generated/com/panopticode/openapi/model/CreateMetadataRequest.java
 src/main/java/generated/com/panopticode/openapi/model/ErrorModel.java
+src/main/java/generated/com/panopticode/openapi/model/Kind.java
 src/main/java/generated/com/panopticode/openapi/model/Metadata.java
+src/main/java/generated/com/panopticode/openapi/model/MetadataConsolidationInfo.java
+src/main/java/generated/com/panopticode/openapi/model/MetadataHashesInner.java
+src/main/java/generated/com/panopticode/openapi/model/MetadataThumbnailsInner.java

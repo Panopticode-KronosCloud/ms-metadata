@@ -33,7 +33,7 @@ public enum StatusType implements EnumType {
 
     staged("staged"),
 
-    ready("ready");
+    active("active");
 
     private final String literal;
 

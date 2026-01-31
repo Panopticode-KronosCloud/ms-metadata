@@ -4,19 +4,18 @@
 package com.panopticode.jooq.tables.records;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.panopticode.jooq.enums.KindType;
 import com.panopticode.jooq.enums.StatusType;
-import com.panopticode.jooq.enums.StorageType;
 import com.panopticode.jooq.tables.Entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import org.jooq.Generated;
-import org.jooq.JSONB;
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
 
@@ -82,40 +81,10 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
     }
 
     /**
-     * Setter for <code>metadata.entity.blob_storage</code>.
-     */
-    public void setBlobStorage(@Nullable StorageType value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>metadata.entity.blob_storage</code>.
-     */
-    @Nullable
-    public StorageType getBlobStorage() {
-        return (StorageType) get(3);
-    }
-
-    /**
-     * Setter for <code>metadata.entity.blob_ref</code>.
-     */
-    public void setBlobRef(@Nullable String value) {
-        set(4, value);
-    }
-
-    /**
-     * Getter for <code>metadata.entity.blob_ref</code>.
-     */
-    @Nullable
-    public String getBlobRef() {
-        return (String) get(4);
-    }
-
-    /**
      * Setter for <code>metadata.entity.name</code>.
      */
     public void setName(@NotNull String value) {
-        set(5, value);
+        set(3, value);
     }
 
     /**
@@ -124,14 +93,29 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
     @NotNull
     @NotNull
     public String getName() {
-        return (String) get(5);
+        return (String) get(3);
+    }
+
+    /**
+     * Setter for <code>metadata.entity.extension</code>.
+     */
+    public void setExtension(@Nullable String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>metadata.entity.extension</code>.
+     */
+    @Nullable
+    public String getExtension() {
+        return (String) get(4);
     }
 
     /**
      * Setter for <code>metadata.entity.created</code>.
      */
-    public void setCreated(@NotNull LocalDateTime value) {
-        set(6, value);
+    public void setCreated(@NotNull OffsetDateTime value) {
+        set(5, value);
     }
 
     /**
@@ -139,15 +123,15 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
      */
     @NotNull
     @NotNull
-    public LocalDateTime getCreated() {
-        return (LocalDateTime) get(6);
+    public OffsetDateTime getCreated() {
+        return (OffsetDateTime) get(5);
     }
 
     /**
      * Setter for <code>metadata.entity.last_modified</code>.
      */
-    public void setLastModified(@NotNull LocalDateTime value) {
-        set(7, value);
+    public void setLastModified(@NotNull OffsetDateTime value) {
+        set(6, value);
     }
 
     /**
@@ -155,30 +139,30 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
      */
     @NotNull
     @NotNull
-    public LocalDateTime getLastModified() {
-        return (LocalDateTime) get(7);
+    public OffsetDateTime getLastModified() {
+        return (OffsetDateTime) get(6);
     }
 
     /**
-     * Setter for <code>metadata.entity.size_b</code>.
+     * Setter for <code>metadata.entity.size_bytes</code>.
      */
-    public void setSizeB(@Nullable Long value) {
-        set(8, value);
+    public void setSizeBytes(@Nullable Long value) {
+        set(7, value);
     }
 
     /**
-     * Getter for <code>metadata.entity.size_b</code>.
+     * Getter for <code>metadata.entity.size_bytes</code>.
      */
     @Nullable
-    public Long getSizeB() {
-        return (Long) get(8);
+    public Long getSizeBytes() {
+        return (Long) get(7);
     }
 
     /**
      * Setter for <code>metadata.entity.media_type</code>.
      */
     public void setMediaType(@Nullable String value) {
-        set(9, value);
+        set(8, value);
     }
 
     /**
@@ -186,88 +170,43 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
      */
     @Nullable
     public String getMediaType() {
-        return (String) get(9);
+        return (String) get(8);
     }
 
     /**
-     * Setter for <code>metadata.entity.metadata</code>.
+     * Setter for <code>metadata.entity.custom_metadata</code>.
      */
-    public void setMetadata(@Nullable JSONB value) {
-        set(10, value);
+    public void setCustomMetadata(@Nullable JsonNode value) {
+        set(9, value);
     }
 
     /**
-     * Getter for <code>metadata.entity.metadata</code>.
-     */
-    @Nullable
-    public JSONB getMetadata() {
-        return (JSONB) get(10);
-    }
-
-    /**
-     * Setter for <code>metadata.entity.hash_sha3_256</code>.
-     */
-    public void setHashSha3_256(@Nullable String value) {
-        set(11, value);
-    }
-
-    /**
-     * Getter for <code>metadata.entity.hash_sha3_256</code>.
+     * Getter for <code>metadata.entity.custom_metadata</code>.
      */
     @Nullable
-    public String getHashSha3_256() {
-        return (String) get(11);
-    }
-
-    /**
-     * Setter for <code>metadata.entity.thumbnail</code>.
-     */
-    public void setThumbnail(@Nullable String value) {
-        set(12, value);
-    }
-
-    /**
-     * Getter for <code>metadata.entity.thumbnail</code>.
-     */
-    @Nullable
-    public String getThumbnail() {
-        return (String) get(12);
-    }
-
-    /**
-     * Setter for <code>metadata.entity.consolidate_v</code>.
-     */
-    public void setConsolidateV(@Nullable String value) {
-        set(13, value);
-    }
-
-    /**
-     * Getter for <code>metadata.entity.consolidate_v</code>.
-     */
-    @Nullable
-    public String getConsolidateV() {
-        return (String) get(13);
+    public JsonNode getCustomMetadata() {
+        return (JsonNode) get(9);
     }
 
     /**
      * Setter for <code>metadata.entity.raw_access</code>.
      */
     public void setRawAccess(Boolean value) {
-        set(14, value);
+        set(10, value);
     }
 
     /**
      * Getter for <code>metadata.entity.raw_access</code>.
      */
     public Boolean getRawAccess() {
-        return (Boolean) get(14);
+        return (Boolean) get(10);
     }
 
     /**
      * Setter for <code>metadata.entity.status</code>.
      */
     public void setStatus(@NotNull StatusType value) {
-        set(15, value);
+        set(11, value);
     }
 
     /**
@@ -276,7 +215,7 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
     @NotNull
     @NotNull
     public StatusType getStatus() {
-        return (StatusType) get(15);
+        return (StatusType) get(11);
     }
 
     // -------------------------------------------------------------------------
@@ -303,23 +242,19 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
     /**
      * Create a detached, initialised EntityRecord
      */
-    public EntityRecord(UUID id, @Nullable UUID parentId, @NotNull KindType kind, @Nullable StorageType blobStorage, @Nullable String blobRef, @NotNull String name, @NotNull LocalDateTime created, @NotNull LocalDateTime lastModified, @Nullable Long sizeB, @Nullable String mediaType, @Nullable JSONB metadata, @Nullable String hashSha3_256, @Nullable String thumbnail, @Nullable String consolidateV, Boolean rawAccess, @NotNull StatusType status) {
+    public EntityRecord(UUID id, @Nullable UUID parentId, @NotNull KindType kind, @NotNull String name, @Nullable String extension, @NotNull OffsetDateTime created, @NotNull OffsetDateTime lastModified, @Nullable Long sizeBytes, @Nullable String mediaType, @Nullable JsonNode customMetadata, Boolean rawAccess, @NotNull StatusType status) {
         super(Entity.ENTITY);
 
         setId(id);
         setParentId(parentId);
         setKind(kind);
-        setBlobStorage(blobStorage);
-        setBlobRef(blobRef);
         setName(name);
+        setExtension(extension);
         setCreated(created);
         setLastModified(lastModified);
-        setSizeB(sizeB);
+        setSizeBytes(sizeBytes);
         setMediaType(mediaType);
-        setMetadata(metadata);
-        setHashSha3_256(hashSha3_256);
-        setThumbnail(thumbnail);
-        setConsolidateV(consolidateV);
+        setCustomMetadata(customMetadata);
         setRawAccess(rawAccess);
         setStatus(status);
         resetTouchedOnNotNull();
@@ -335,17 +270,13 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
             setId(value.id());
             setParentId(value.parentId());
             setKind(value.kind());
-            setBlobStorage(value.blobStorage());
-            setBlobRef(value.blobRef());
             setName(value.name());
+            setExtension(value.extension());
             setCreated(value.created());
             setLastModified(value.lastModified());
-            setSizeB(value.sizeB());
+            setSizeBytes(value.sizeBytes());
             setMediaType(value.mediaType());
-            setMetadata(value.metadata());
-            setHashSha3_256(value.hashSha3_256());
-            setThumbnail(value.thumbnail());
-            setConsolidateV(value.consolidateV());
+            setCustomMetadata(value.customMetadata());
             setRawAccess(value.rawAccess());
             setStatus(value.status());
             resetTouchedOnNotNull();

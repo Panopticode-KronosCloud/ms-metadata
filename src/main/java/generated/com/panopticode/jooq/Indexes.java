@@ -30,6 +30,5 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
-    public static final Index IDX_BLOB_STORAGE_TYPE = Internal.createIndex(DSL.name("idx_blob_storage_type"), Entity.ENTITY, new OrderField[] { Entity.ENTITY.BLOB_STORAGE }, false);
     public static final Index IDX_PARENT_ID = Internal.createIndex(DSL.name("idx_parent_id"), Entity.ENTITY, new OrderField[] { Entity.ENTITY.PARENT_ID }, false);
 }

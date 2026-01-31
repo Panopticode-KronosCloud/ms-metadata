@@ -5,6 +5,10 @@ package com.panopticode.jooq;
 
 
 import com.panopticode.jooq.tables.Entity;
+import com.panopticode.jooq.tables.EntityConsolidation;
+import com.panopticode.jooq.tables.EntityHash;
+import com.panopticode.jooq.tables.EntityStorage;
+import com.panopticode.jooq.tables.EntityThumbnail;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -44,6 +48,26 @@ public class Metadata extends SchemaImpl {
     public final Entity ENTITY = Entity.ENTITY;
 
     /**
+     * The table <code>metadata.entity_consolidation</code>.
+     */
+    public final EntityConsolidation ENTITY_CONSOLIDATION = EntityConsolidation.ENTITY_CONSOLIDATION;
+
+    /**
+     * The table <code>metadata.entity_hash</code>.
+     */
+    public final EntityHash ENTITY_HASH = EntityHash.ENTITY_HASH;
+
+    /**
+     * The table <code>metadata.entity_storage</code>.
+     */
+    public final EntityStorage ENTITY_STORAGE = EntityStorage.ENTITY_STORAGE;
+
+    /**
+     * The table <code>metadata.entity_thumbnail</code>.
+     */
+    public final EntityThumbnail ENTITY_THUMBNAIL = EntityThumbnail.ENTITY_THUMBNAIL;
+
+    /**
      * No further instances allowed
      */
     private Metadata() {
@@ -61,7 +85,11 @@ public class Metadata extends SchemaImpl {
     @NotNull
     public final List<Table<?>> getTables() {
         return Arrays.asList(
-            Entity.ENTITY
+            Entity.ENTITY,
+            EntityConsolidation.ENTITY_CONSOLIDATION,
+            EntityHash.ENTITY_HASH,
+            EntityStorage.ENTITY_STORAGE,
+            EntityThumbnail.ENTITY_THUMBNAIL
         );
     }
 }

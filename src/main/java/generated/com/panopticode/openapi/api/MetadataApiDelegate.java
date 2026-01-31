@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link MetadataApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-18T01:57:44.127371827Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-26T19:03:14.882484979Z[Europe/London]", comments = "Generator version: 7.18.0")
 public interface MetadataApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -41,17 +41,17 @@ public interface MetadataApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"blob_ref\" : \"blob_ref\", \"metadata\" : { \"key\" : \"\" }, \"thumbnail\" : \"thumbnail\", \"kind\" : \"file\", \"created\" : \"2000-01-23T04:56:07.000+00:00\", \"blob_type\" : \"blob_type\", \"media_type\" : \"media_type\", \"parent_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"name\" : \"name\", \"size_b\" : 0, \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"last_modified\" : \"2000-01-23T04:56:07.000+00:00\", \"hash_sha3_256\" : \"hash_sha3_256\", \"raw_access\" : false, \"consolidate_v\" : \"consolidate_v\", \"status\" : \"unavailable\" }";
+                    String exampleString = "{ \"blob_ref\" : \"blob_ref\", \"metadata\" : { \"key\" : \"\" }, \"size_bytes\" : 0, \"kind\" : \"file\", \"created\" : \"2000-01-23T04:56:07.000+00:00\", \"blob_type\" : \"blob_type\", \"media_type\" : \"media_type\", \"parent_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"name\" : \"name\", \"hashes\" : [ { \"encoding\" : \"encoding\", \"value\" : \"value\", \"algorithm\" : \"algorithm\" }, { \"encoding\" : \"encoding\", \"value\" : \"value\", \"algorithm\" : \"algorithm\" } ], \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"consolidation_info\" : { \"consolidated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"version\" : \"version\" }, \"thumbnails\" : [ { \"width\" : 0, \"height\" : 0 }, { \"width\" : 0, \"height\" : 0 } ], \"last_modified\" : \"2000-01-23T04:56:07.000+00:00\", \"raw_access\" : false, \"status\" : \"unavailable\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"code\" : 6, \"message\" : \"message\" }";
+                    String exampleString = "{ \"code\" : 5, \"message\" : \"message\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"code\" : 6, \"message\" : \"message\" }";
+                    String exampleString = "{ \"code\" : 5, \"message\" : \"message\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

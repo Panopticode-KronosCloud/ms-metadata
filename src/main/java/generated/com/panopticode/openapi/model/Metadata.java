@@ -5,9 +5,15 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.panopticode.openapi.model.Kind;
+import com.panopticode.openapi.model.MetadataConsolidationInfo;
+import com.panopticode.openapi.model.MetadataHashesInner;
+import com.panopticode.openapi.model.MetadataThumbnailsInner;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -29,49 +35,14 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "Metadata", description = "Metadata record")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-18T01:57:44.127371827Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-26T19:03:14.882484979Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class Metadata {
 
   private UUID id;
 
   private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
 
-  /**
-   * Gets or Sets kind
-   */
-  public enum KindEnum {
-    FILE("file"),
-    
-    DIRECTORY("directory");
-
-    private final String value;
-
-    KindEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static KindEnum fromValue(String value) {
-      for (KindEnum b : KindEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private KindEnum kind;
+  private Kind kind;
 
   private JsonNullable<String> blobType = JsonNullable.<String>undefined();
 
@@ -85,18 +56,20 @@ public class Metadata {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime lastModified;
 
-  private JsonNullable<Long> sizeB = JsonNullable.<Long>undefined();
+  private JsonNullable<Long> sizeBytes = JsonNullable.<Long>undefined();
 
   private JsonNullable<String> mediaType = JsonNullable.<String>undefined();
 
   @Valid
   private JsonNullable<Map<String, Object>> metadata = JsonNullable.<Map<String, Object>>undefined();
 
-  private JsonNullable<String> hashSha3256 = JsonNullable.<String>undefined();
+  @Valid
+  private JsonNullable<List<@Valid MetadataHashesInner>> hashes = JsonNullable.<List<@Valid MetadataHashesInner>>undefined();
 
-  private JsonNullable<String> thumbnail = JsonNullable.<String>undefined();
+  @Valid
+  private JsonNullable<List<@Valid MetadataThumbnailsInner>> thumbnails = JsonNullable.<List<@Valid MetadataThumbnailsInner>>undefined();
 
-  private JsonNullable<String> consolidateV = JsonNullable.<String>undefined();
+  private JsonNullable<MetadataConsolidationInfo> consolidationInfo = JsonNullable.<MetadataConsolidationInfo>undefined();
 
   private Boolean rawAccess = false;
 
@@ -110,7 +83,7 @@ public class Metadata {
     
     STAGED("staged"),
     
-    READY("ready");
+    ACTIVE("active");
 
     private final String value;
 
@@ -148,7 +121,7 @@ public class Metadata {
   /**
    * Constructor with only required parameters
    */
-  public Metadata(UUID id, KindEnum kind, String name, OffsetDateTime created, OffsetDateTime lastModified, Boolean rawAccess, StatusEnum status) {
+  public Metadata(UUID id, Kind kind, String name, OffsetDateTime created, OffsetDateTime lastModified, Boolean rawAccess, StatusEnum status) {
     this.id = id;
     this.kind = kind;
     this.name = name;
@@ -198,7 +171,7 @@ public class Metadata {
     this.parentId = parentId;
   }
 
-  public Metadata kind(KindEnum kind) {
+  public Metadata kind(Kind kind) {
     this.kind = kind;
     return this;
   }
@@ -207,14 +180,14 @@ public class Metadata {
    * Get kind
    * @return kind
    */
-  @NotNull 
+  @NotNull @Valid 
   @Schema(name = "kind", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("kind")
-  public KindEnum getKind() {
+  public Kind getKind() {
     return kind;
   }
 
-  public void setKind(KindEnum kind) {
+  public void setKind(Kind kind) {
     this.kind = kind;
   }
 
@@ -318,24 +291,24 @@ public class Metadata {
     this.lastModified = lastModified;
   }
 
-  public Metadata sizeB(Long sizeB) {
-    this.sizeB = JsonNullable.of(sizeB);
+  public Metadata sizeBytes(Long sizeBytes) {
+    this.sizeBytes = JsonNullable.of(sizeBytes);
     return this;
   }
 
   /**
-   * Get sizeB
-   * @return sizeB
+   * Get sizeBytes
+   * @return sizeBytes
    */
   
-  @Schema(name = "size_b", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("size_b")
-  public JsonNullable<Long> getSizeB() {
-    return sizeB;
+  @Schema(name = "size_bytes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("size_bytes")
+  public JsonNullable<Long> getSizeBytes() {
+    return sizeBytes;
   }
 
-  public void setSizeB(JsonNullable<Long> sizeB) {
-    this.sizeB = sizeB;
+  public void setSizeBytes(JsonNullable<Long> sizeBytes) {
+    this.sizeBytes = sizeBytes;
   }
 
   public Metadata mediaType(String mediaType) {
@@ -386,64 +359,80 @@ public class Metadata {
     this.metadata = metadata;
   }
 
-  public Metadata hashSha3256(String hashSha3256) {
-    this.hashSha3256 = JsonNullable.of(hashSha3256);
+  public Metadata hashes(List<@Valid MetadataHashesInner> hashes) {
+    this.hashes = JsonNullable.of(hashes);
+    return this;
+  }
+
+  public Metadata addHashesItem(MetadataHashesInner hashesItem) {
+    if (this.hashes == null || !this.hashes.isPresent()) {
+      this.hashes = JsonNullable.of(new ArrayList<>());
+    }
+    this.hashes.get().add(hashesItem);
     return this;
   }
 
   /**
-   * Get hashSha3256
-   * @return hashSha3256
+   * Get hashes
+   * @return hashes
    */
-  
-  @Schema(name = "hash_sha3_256", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("hash_sha3_256")
-  public JsonNullable<String> getHashSha3256() {
-    return hashSha3256;
+  @Valid 
+  @Schema(name = "hashes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("hashes")
+  public JsonNullable<List<@Valid MetadataHashesInner>> getHashes() {
+    return hashes;
   }
 
-  public void setHashSha3256(JsonNullable<String> hashSha3256) {
-    this.hashSha3256 = hashSha3256;
+  public void setHashes(JsonNullable<List<@Valid MetadataHashesInner>> hashes) {
+    this.hashes = hashes;
   }
 
-  public Metadata thumbnail(String thumbnail) {
-    this.thumbnail = JsonNullable.of(thumbnail);
+  public Metadata thumbnails(List<@Valid MetadataThumbnailsInner> thumbnails) {
+    this.thumbnails = JsonNullable.of(thumbnails);
+    return this;
+  }
+
+  public Metadata addThumbnailsItem(MetadataThumbnailsInner thumbnailsItem) {
+    if (this.thumbnails == null || !this.thumbnails.isPresent()) {
+      this.thumbnails = JsonNullable.of(new ArrayList<>());
+    }
+    this.thumbnails.get().add(thumbnailsItem);
     return this;
   }
 
   /**
-   * Get thumbnail
-   * @return thumbnail
+   * Get thumbnails
+   * @return thumbnails
    */
-  
-  @Schema(name = "thumbnail", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("thumbnail")
-  public JsonNullable<String> getThumbnail() {
-    return thumbnail;
+  @Valid 
+  @Schema(name = "thumbnails", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("thumbnails")
+  public JsonNullable<List<@Valid MetadataThumbnailsInner>> getThumbnails() {
+    return thumbnails;
   }
 
-  public void setThumbnail(JsonNullable<String> thumbnail) {
-    this.thumbnail = thumbnail;
+  public void setThumbnails(JsonNullable<List<@Valid MetadataThumbnailsInner>> thumbnails) {
+    this.thumbnails = thumbnails;
   }
 
-  public Metadata consolidateV(String consolidateV) {
-    this.consolidateV = JsonNullable.of(consolidateV);
+  public Metadata consolidationInfo(MetadataConsolidationInfo consolidationInfo) {
+    this.consolidationInfo = JsonNullable.of(consolidationInfo);
     return this;
   }
 
   /**
-   * Get consolidateV
-   * @return consolidateV
+   * Get consolidationInfo
+   * @return consolidationInfo
    */
-  
-  @Schema(name = "consolidate_v", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("consolidate_v")
-  public JsonNullable<String> getConsolidateV() {
-    return consolidateV;
+  @Valid 
+  @Schema(name = "consolidation_info", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("consolidation_info")
+  public JsonNullable<MetadataConsolidationInfo> getConsolidationInfo() {
+    return consolidationInfo;
   }
 
-  public void setConsolidateV(JsonNullable<String> consolidateV) {
-    this.consolidateV = consolidateV;
+  public void setConsolidationInfo(JsonNullable<MetadataConsolidationInfo> consolidationInfo) {
+    this.consolidationInfo = consolidationInfo;
   }
 
   public Metadata rawAccess(Boolean rawAccess) {
@@ -503,12 +492,12 @@ public class Metadata {
         Objects.equals(this.name, metadata.name) &&
         Objects.equals(this.created, metadata.created) &&
         Objects.equals(this.lastModified, metadata.lastModified) &&
-        equalsNullable(this.sizeB, metadata.sizeB) &&
+        equalsNullable(this.sizeBytes, metadata.sizeBytes) &&
         equalsNullable(this.mediaType, metadata.mediaType) &&
         equalsNullable(this.metadata, metadata.metadata) &&
-        equalsNullable(this.hashSha3256, metadata.hashSha3256) &&
-        equalsNullable(this.thumbnail, metadata.thumbnail) &&
-        equalsNullable(this.consolidateV, metadata.consolidateV) &&
+        equalsNullable(this.hashes, metadata.hashes) &&
+        equalsNullable(this.thumbnails, metadata.thumbnails) &&
+        equalsNullable(this.consolidationInfo, metadata.consolidationInfo) &&
         Objects.equals(this.rawAccess, metadata.rawAccess) &&
         Objects.equals(this.status, metadata.status);
   }
@@ -519,7 +508,7 @@ public class Metadata {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, hashCodeNullable(parentId), kind, hashCodeNullable(blobType), hashCodeNullable(blobRef), name, created, lastModified, hashCodeNullable(sizeB), hashCodeNullable(mediaType), hashCodeNullable(metadata), hashCodeNullable(hashSha3256), hashCodeNullable(thumbnail), hashCodeNullable(consolidateV), rawAccess, status);
+    return Objects.hash(id, hashCodeNullable(parentId), kind, hashCodeNullable(blobType), hashCodeNullable(blobRef), name, created, lastModified, hashCodeNullable(sizeBytes), hashCodeNullable(mediaType), hashCodeNullable(metadata), hashCodeNullable(hashes), hashCodeNullable(thumbnails), hashCodeNullable(consolidationInfo), rawAccess, status);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -541,12 +530,12 @@ public class Metadata {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    lastModified: ").append(toIndentedString(lastModified)).append("\n");
-    sb.append("    sizeB: ").append(toIndentedString(sizeB)).append("\n");
+    sb.append("    sizeBytes: ").append(toIndentedString(sizeBytes)).append("\n");
     sb.append("    mediaType: ").append(toIndentedString(mediaType)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
-    sb.append("    hashSha3256: ").append(toIndentedString(hashSha3256)).append("\n");
-    sb.append("    thumbnail: ").append(toIndentedString(thumbnail)).append("\n");
-    sb.append("    consolidateV: ").append(toIndentedString(consolidateV)).append("\n");
+    sb.append("    hashes: ").append(toIndentedString(hashes)).append("\n");
+    sb.append("    thumbnails: ").append(toIndentedString(thumbnails)).append("\n");
+    sb.append("    consolidationInfo: ").append(toIndentedString(consolidationInfo)).append("\n");
     sb.append("    rawAccess: ").append(toIndentedString(rawAccess)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");

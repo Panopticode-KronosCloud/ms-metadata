@@ -854,8 +854,7 @@ ul.nav-tabs {
       "nullable" : true
     },
     "kind" : {
-      "type" : "string",
-      "enum" : [ "file", "directory" ]
+      "$ref" : "#/components/schemas/Kind"
     },
     "name" : {
       "type" : "string"
@@ -898,6 +897,10 @@ ul.nav-tabs {
   },
   "description" : "Generic error"
 };
+    defs["Kind"] = {
+  "type" : "string",
+  "enum" : [ "file", "directory" ]
+};
     defs["Metadata"] = {
   "required" : [ "created", "id", "kind", "last_modified", "name", "raw_access", "status" ],
   "type" : "object",
@@ -912,8 +915,7 @@ ul.nav-tabs {
       "nullable" : true
     },
     "kind" : {
-      "type" : "string",
-      "enum" : [ "file", "directory" ]
+      "$ref" : "#/components/schemas/Kind"
     },
     "blob_type" : {
       "type" : "string",
@@ -934,7 +936,7 @@ ul.nav-tabs {
       "type" : "string",
       "format" : "date-time"
     },
-    "size_b" : {
+    "size_bytes" : {
       "type" : "integer",
       "format" : "int64",
       "nullable" : true
@@ -948,17 +950,22 @@ ul.nav-tabs {
       "additionalProperties" : true,
       "nullable" : true
     },
-    "hash_sha3_256" : {
-      "type" : "string",
-      "nullable" : true
+    "hashes" : {
+      "type" : "array",
+      "nullable" : true,
+      "items" : {
+        "$ref" : "#/components/schemas/Metadata_hashes_inner"
+      }
     },
-    "thumbnail" : {
-      "type" : "string",
-      "nullable" : true
+    "thumbnails" : {
+      "type" : "array",
+      "nullable" : true,
+      "items" : {
+        "$ref" : "#/components/schemas/Metadata_thumbnails_inner"
+      }
     },
-    "consolidate_v" : {
-      "type" : "string",
-      "nullable" : true
+    "consolidation_info" : {
+      "$ref" : "#/components/schemas/Metadata_consolidation_info"
     },
     "raw_access" : {
       "type" : "boolean",
@@ -966,10 +973,54 @@ ul.nav-tabs {
     },
     "status" : {
       "type" : "string",
-      "enum" : [ "unavailable", "deleted", "staged", "ready" ]
+      "enum" : [ "unavailable", "deleted", "staged", "active" ]
     }
   },
   "description" : "Metadata record"
+};
+    defs["Metadata_consolidation_info"] = {
+  "required" : [ "consolidated_at", "version" ],
+  "type" : "object",
+  "properties" : {
+    "version" : {
+      "type" : "string"
+    },
+    "consolidated_at" : {
+      "type" : "string",
+      "format" : "date-time"
+    }
+  },
+  "nullable" : true
+};
+    defs["Metadata_hashes_inner"] = {
+  "type" : "object",
+  "properties" : {
+    "algorithm" : {
+      "type" : "string"
+    },
+    "encoding" : {
+      "type" : "string"
+    },
+    "value" : {
+      "type" : "string"
+    }
+  }
+};
+    defs["Metadata_thumbnails_inner"] = {
+  "required" : [ "height", "width" ],
+  "type" : "object",
+  "properties" : {
+    "width" : {
+      "minimum" : 0,
+      "exclusiveMinimum" : true,
+      "type" : "integer"
+    },
+    "height" : {
+      "minimum" : 0,
+      "exclusiveMinimum" : true,
+      "type" : "integer"
+    }
+  }
 };
 
 

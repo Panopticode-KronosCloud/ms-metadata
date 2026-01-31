@@ -27,7 +27,15 @@ import org.jooq.Schema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public enum StorageType implements EnumType {
 
-    b2("b2");
+    B2("B2"),
+
+    S3("S3"),
+
+    disk("disk"),
+
+    azure_blob("azure_blob"),
+
+    google_cloud_storage("google_cloud_storage");
 
     private final String literal;
 

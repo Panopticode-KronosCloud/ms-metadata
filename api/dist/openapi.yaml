@@ -62,50 +62,12 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/CreateMetadataRequest'
 components:
-  requestBodies:
-    CreateMetadataRequest:
-      description: Data object to save a new metadata entry
-      required: true
-      content:
-        application/json:
-          schema:
-            description: Metadata record
-            type: object
-            required:
-              - kind
-              - name
-              - created
-              - last_modified
-            properties:
-              parent_id:
-                type: string
-                format: uuid
-                nullable: true
-              kind:
-                type: string
-                enum:
-                  - file
-                  - directory
-              name:
-                type: string
-              created:
-                type: string
-                format: date-time
-              last_modified:
-                type: string
-                format: date-time
-              suggested_media_type:
-                description: Suggested media type. Might be refined automatically.
-                type: string
-                nullable: true
-              metadata:
-                type: object
-                additionalProperties: true
-                nullable: true
-              raw_access:
-                type: boolean
-                default: false
   schemas:
+    Kind:
+      type: string
+      enum:
+        - file
+        - directory
     ErrorModel:
       description: Generic error
       type: object
@@ -137,10 +99,7 @@ components:
           format: uuid
           nullable: true
         kind:
-          type: string
-          enum:
-            - file
-            - directory
+          $ref: '#/components/schemas/Kind'
         blob_type:
           type: string
           nullable: true
@@ -155,7 +114,7 @@ components:
         last_modified:
           type: string
           format: date-time
-        size_b:
+        size_bytes:
           type: integer
           format: int64
           nullable: true
@@ -166,15 +125,47 @@ components:
           type: object
           additionalProperties: true
           nullable: true
-        hash_sha3_256:
-          type: string
+        hashes:
+          type: array
           nullable: true
-        thumbnail:
-          type: string
+          items:
+            type: object
+            properties:
+              algorithm:
+                type: string
+              encoding:
+                type: string
+              value:
+                type: string
+        thumbnails:
+          type: array
           nullable: true
-        consolidate_v:
-          type: string
+          items:
+            type: object
+            required:
+              - width
+              - height
+            properties:
+              width:
+                type: integer
+                minimum: 0
+                exclusiveMinimum: true
+              height:
+                type: integer
+                minimum: 0
+                exclusiveMinimum: true
+        consolidation_info:
+          type: object
           nullable: true
+          required:
+            - version
+            - consolidated_at
+          properties:
+            version:
+              type: string
+            consolidated_at:
+              type: string
+              format: date-time
         raw_access:
           type: boolean
           default: false
@@ -184,4 +175,44 @@ components:
             - unavailable
             - deleted
             - staged
-            - ready
+            - active
+  requestBodies:
+    CreateMetadataRequest:
+      description: Data object to save a new metadata entry
+      required: true
+      content:
+        application/json:
+          schema:
+            description: Metadata record
+            type: object
+            required:
+              - kind
+              - name
+              - created
+              - last_modified
+            properties:
+              parent_id:
+                type: string
+                format: uuid
+                nullable: true
+              kind:
+                $ref: '#/components/schemas/Kind'
+              name:
+                type: string
+              created:
+                type: string
+                format: date-time
+              last_modified:
+                type: string
+                format: date-time
+              suggested_media_type:
+                description: Suggested media type. Might be refined automatically.
+                type: string
+                nullable: true
+              metadata:
+                type: object
+                additionalProperties: true
+                nullable: true
+              raw_access:
+                type: boolean
+                default: false

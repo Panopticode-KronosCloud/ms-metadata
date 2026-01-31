@@ -5,6 +5,10 @@ package com.panopticode.jooq;
 
 
 import com.panopticode.jooq.tables.Entity;
+import com.panopticode.jooq.tables.EntityConsolidation;
+import com.panopticode.jooq.tables.EntityHash;
+import com.panopticode.jooq.tables.EntityStorage;
+import com.panopticode.jooq.tables.EntityThumbnail;
 
 import org.jooq.Generated;
 
@@ -26,4 +30,24 @@ public class Tables {
      * The table <code>metadata.entity</code>.
      */
     public static final Entity ENTITY = Entity.ENTITY;
+
+    /**
+     * The table <code>metadata.entity_consolidation</code>.
+     */
+    public static final EntityConsolidation ENTITY_CONSOLIDATION = EntityConsolidation.ENTITY_CONSOLIDATION;
+
+    /**
+     * The table <code>metadata.entity_hash</code>.
+     */
+    public static final EntityHash ENTITY_HASH = EntityHash.ENTITY_HASH;
+
+    /**
+     * The table <code>metadata.entity_storage</code>.
+     */
+    public static final EntityStorage ENTITY_STORAGE = EntityStorage.ENTITY_STORAGE;
+
+    /**
+     * The table <code>metadata.entity_thumbnail</code>.
+     */
+    public static final EntityThumbnail ENTITY_THUMBNAIL = EntityThumbnail.ENTITY_THUMBNAIL;
 }

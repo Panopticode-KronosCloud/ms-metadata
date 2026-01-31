@@ -6,12 +6,12 @@ VALUES
       'test directory',
       '2004-10-19 10:23:54',
       '2012-01-23 16:11:03',
-      'ready'
+      'active'
   ),
   ( -- file
       'file',
       'test file.png',
       '2004-10-19 10:23:54',
       '2012-01-23 16:11:03',
-      'staged'
+      'active'
   );

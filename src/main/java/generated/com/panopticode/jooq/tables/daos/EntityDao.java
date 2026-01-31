@@ -4,24 +4,24 @@
 package com.panopticode.jooq.tables.daos;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.panopticode.jooq.AbstractSpringDAOImpl;
 import com.panopticode.jooq.enums.KindType;
 import com.panopticode.jooq.enums.StatusType;
-import com.panopticode.jooq.enums.StorageType;
 import com.panopticode.jooq.tables.Entity;
 import com.panopticode.jooq.tables.records.EntityRecord;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.jooq.Configuration;
 import org.jooq.Generated;
-import org.jooq.JSONB;
+import org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -129,40 +129,6 @@ public class EntityDao extends AbstractSpringDAOImpl<EntityRecord, com.panoptico
     }
 
     /**
-     * Fetch records that have <code>blob_storage BETWEEN lowerInclusive AND
-     * upperInclusive</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfBlobStorage(StorageType lowerInclusive, StorageType upperInclusive) {
-        return fetchRange(Entity.ENTITY.BLOB_STORAGE, lowerInclusive, upperInclusive);
-    }
-
-    /**
-     * Fetch records that have <code>blob_storage IN (values)</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByBlobStorage(StorageType... values) {
-        return fetch(Entity.ENTITY.BLOB_STORAGE, values);
-    }
-
-    /**
-     * Fetch records that have <code>blob_ref BETWEEN lowerInclusive AND
-     * upperInclusive</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfBlobRef(String lowerInclusive, String upperInclusive) {
-        return fetchRange(Entity.ENTITY.BLOB_REF, lowerInclusive, upperInclusive);
-    }
-
-    /**
-     * Fetch records that have <code>blob_ref IN (values)</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByBlobRef(String... values) {
-        return fetch(Entity.ENTITY.BLOB_REF, values);
-    }
-
-    /**
      * Fetch records that have <code>name BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */
@@ -180,11 +146,28 @@ public class EntityDao extends AbstractSpringDAOImpl<EntityRecord, com.panoptico
     }
 
     /**
+     * Fetch records that have <code>extension BETWEEN lowerInclusive AND
+     * upperInclusive</code>
+     */
+    @NotNull
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfExtension(String lowerInclusive, String upperInclusive) {
+        return fetchRange(Entity.ENTITY.EXTENSION, lowerInclusive, upperInclusive);
+    }
+
+    /**
+     * Fetch records that have <code>extension IN (values)</code>
+     */
+    @NotNull
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByExtension(String... values) {
+        return fetch(Entity.ENTITY.EXTENSION, values);
+    }
+
+    /**
      * Fetch records that have <code>created BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfCreated(LocalDateTime lowerInclusive, LocalDateTime upperInclusive) {
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfCreated(OffsetDateTime lowerInclusive, OffsetDateTime upperInclusive) {
         return fetchRange(Entity.ENTITY.CREATED, lowerInclusive, upperInclusive);
     }
 
@@ -192,7 +175,7 @@ public class EntityDao extends AbstractSpringDAOImpl<EntityRecord, com.panoptico
      * Fetch records that have <code>created IN (values)</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByCreated(LocalDateTime... values) {
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByCreated(OffsetDateTime... values) {
         return fetch(Entity.ENTITY.CREATED, values);
     }
 
@@ -201,7 +184,7 @@ public class EntityDao extends AbstractSpringDAOImpl<EntityRecord, com.panoptico
      * upperInclusive</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfLastModified(LocalDateTime lowerInclusive, LocalDateTime upperInclusive) {
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfLastModified(OffsetDateTime lowerInclusive, OffsetDateTime upperInclusive) {
         return fetchRange(Entity.ENTITY.LAST_MODIFIED, lowerInclusive, upperInclusive);
     }
 
@@ -209,25 +192,25 @@ public class EntityDao extends AbstractSpringDAOImpl<EntityRecord, com.panoptico
      * Fetch records that have <code>last_modified IN (values)</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByLastModified(LocalDateTime... values) {
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByLastModified(OffsetDateTime... values) {
         return fetch(Entity.ENTITY.LAST_MODIFIED, values);
     }
 
     /**
-     * Fetch records that have <code>size_b BETWEEN lowerInclusive AND
+     * Fetch records that have <code>size_bytes BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfSizeB(Long lowerInclusive, Long upperInclusive) {
-        return fetchRange(Entity.ENTITY.SIZE_B, lowerInclusive, upperInclusive);
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfSizeBytes(Long lowerInclusive, Long upperInclusive) {
+        return fetchRange(Entity.ENTITY.SIZE_BYTES, lowerInclusive, upperInclusive);
     }
 
     /**
-     * Fetch records that have <code>size_b IN (values)</code>
+     * Fetch records that have <code>size_bytes IN (values)</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchBySizeB(Long... values) {
-        return fetch(Entity.ENTITY.SIZE_B, values);
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchBySizeBytes(Long... values) {
+        return fetch(Entity.ENTITY.SIZE_BYTES, values);
     }
 
     /**
@@ -248,71 +231,20 @@ public class EntityDao extends AbstractSpringDAOImpl<EntityRecord, com.panoptico
     }
 
     /**
-     * Fetch records that have <code>metadata BETWEEN lowerInclusive AND
+     * Fetch records that have <code>custom_metadata BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfMetadata(JSONB lowerInclusive, JSONB upperInclusive) {
-        return fetchRange(Entity.ENTITY.METADATA, lowerInclusive, upperInclusive);
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfCustomMetadata(JsonNode lowerInclusive, JsonNode upperInclusive) {
+        return fetchRange(Entity.ENTITY.CUSTOM_METADATA, lowerInclusive, upperInclusive);
     }
 
     /**
-     * Fetch records that have <code>metadata IN (values)</code>
+     * Fetch records that have <code>custom_metadata IN (values)</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByMetadata(JSONB... values) {
-        return fetch(Entity.ENTITY.METADATA, values);
-    }
-
-    /**
-     * Fetch records that have <code>hash_sha3_256 BETWEEN lowerInclusive AND
-     * upperInclusive</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfHashSha3_256(String lowerInclusive, String upperInclusive) {
-        return fetchRange(Entity.ENTITY.HASH_SHA3_256, lowerInclusive, upperInclusive);
-    }
-
-    /**
-     * Fetch records that have <code>hash_sha3_256 IN (values)</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByHashSha3_256(String... values) {
-        return fetch(Entity.ENTITY.HASH_SHA3_256, values);
-    }
-
-    /**
-     * Fetch records that have <code>thumbnail BETWEEN lowerInclusive AND
-     * upperInclusive</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfThumbnail(String lowerInclusive, String upperInclusive) {
-        return fetchRange(Entity.ENTITY.THUMBNAIL, lowerInclusive, upperInclusive);
-    }
-
-    /**
-     * Fetch records that have <code>thumbnail IN (values)</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByThumbnail(String... values) {
-        return fetch(Entity.ENTITY.THUMBNAIL, values);
-    }
-
-    /**
-     * Fetch records that have <code>consolidate_v BETWEEN lowerInclusive AND
-     * upperInclusive</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchRangeOfConsolidateV(String lowerInclusive, String upperInclusive) {
-        return fetchRange(Entity.ENTITY.CONSOLIDATE_V, lowerInclusive, upperInclusive);
-    }
-
-    /**
-     * Fetch records that have <code>consolidate_v IN (values)</code>
-     */
-    @NotNull
-    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByConsolidateV(String... values) {
-        return fetch(Entity.ENTITY.CONSOLIDATE_V, values);
+    public List<com.panopticode.jooq.tables.pojos.Entity> fetchByCustomMetadata(JsonNode... values) {
+        return fetch(Entity.ENTITY.CUSTOM_METADATA, values);
     }
 
     /**

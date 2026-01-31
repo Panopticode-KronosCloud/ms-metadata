@@ -5,7 +5,15 @@ package com.panopticode.jooq;
 
 
 import com.panopticode.jooq.tables.Entity;
+import com.panopticode.jooq.tables.EntityConsolidation;
+import com.panopticode.jooq.tables.EntityHash;
+import com.panopticode.jooq.tables.EntityStorage;
+import com.panopticode.jooq.tables.EntityThumbnail;
+import com.panopticode.jooq.tables.records.EntityConsolidationRecord;
+import com.panopticode.jooq.tables.records.EntityHashRecord;
 import com.panopticode.jooq.tables.records.EntityRecord;
+import com.panopticode.jooq.tables.records.EntityStorageRecord;
+import com.panopticode.jooq.tables.records.EntityThumbnailRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.Generated;
@@ -36,10 +44,18 @@ public class Keys {
 
     public static final UniqueKey<EntityRecord> ENTITY_PKEY = Internal.createUniqueKey(Entity.ENTITY, DSL.name("entity_pkey"), new TableField[] { Entity.ENTITY.ID }, true);
     public static final UniqueKey<EntityRecord> UNIQUE_NAME = Internal.createUniqueKey(Entity.ENTITY, DSL.name("unique_name"), new TableField[] { Entity.ENTITY.PARENT_ID, Entity.ENTITY.NAME }, true);
+    public static final UniqueKey<EntityConsolidationRecord> ENTITY_CONSOLIDATION_PKEY = Internal.createUniqueKey(EntityConsolidation.ENTITY_CONSOLIDATION, DSL.name("entity_consolidation_pkey"), new TableField[] { EntityConsolidation.ENTITY_CONSOLIDATION.ENTITY_ID }, true);
+    public static final UniqueKey<EntityHashRecord> ENTITY_HASH_PKEY = Internal.createUniqueKey(EntityHash.ENTITY_HASH, DSL.name("entity_hash_pkey"), new TableField[] { EntityHash.ENTITY_HASH.ENTITY_ID, EntityHash.ENTITY_HASH.ALGORITHM }, true);
+    public static final UniqueKey<EntityStorageRecord> ENTITY_STORAGE_PKEY = Internal.createUniqueKey(EntityStorage.ENTITY_STORAGE, DSL.name("entity_storage_pkey"), new TableField[] { EntityStorage.ENTITY_STORAGE.ENTITY_ID }, true);
+    public static final UniqueKey<EntityThumbnailRecord> ENTITY_THUMBNAIL_PKEY = Internal.createUniqueKey(EntityThumbnail.ENTITY_THUMBNAIL, DSL.name("entity_thumbnail_pkey"), new TableField[] { EntityThumbnail.ENTITY_THUMBNAIL.ENTITY_ID, EntityThumbnail.ENTITY_THUMBNAIL.WIDTH, EntityThumbnail.ENTITY_THUMBNAIL.HEIGHT }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
     public static final ForeignKey<EntityRecord, EntityRecord> ENTITY__ENTITY_PARENT_ID_FKEY = Internal.createForeignKey(Entity.ENTITY, DSL.name("entity_parent_id_fkey"), new TableField[] { Entity.ENTITY.PARENT_ID }, Keys.ENTITY_PKEY, new TableField[] { Entity.ENTITY.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.NO_ACTION);
+    public static final ForeignKey<EntityConsolidationRecord, EntityRecord> ENTITY_CONSOLIDATION__ENTITY_CONSOLIDATION_ENTITY_ID_FKEY = Internal.createForeignKey(EntityConsolidation.ENTITY_CONSOLIDATION, DSL.name("entity_consolidation_entity_id_fkey"), new TableField[] { EntityConsolidation.ENTITY_CONSOLIDATION.ENTITY_ID }, Keys.ENTITY_PKEY, new TableField[] { Entity.ENTITY.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.NO_ACTION);
+    public static final ForeignKey<EntityHashRecord, EntityRecord> ENTITY_HASH__ENTITY_HASH_ENTITY_ID_FKEY = Internal.createForeignKey(EntityHash.ENTITY_HASH, DSL.name("entity_hash_entity_id_fkey"), new TableField[] { EntityHash.ENTITY_HASH.ENTITY_ID }, Keys.ENTITY_PKEY, new TableField[] { Entity.ENTITY.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.NO_ACTION);
+    public static final ForeignKey<EntityStorageRecord, EntityRecord> ENTITY_STORAGE__ENTITY_STORAGE_ENTITY_ID_FKEY = Internal.createForeignKey(EntityStorage.ENTITY_STORAGE, DSL.name("entity_storage_entity_id_fkey"), new TableField[] { EntityStorage.ENTITY_STORAGE.ENTITY_ID }, Keys.ENTITY_PKEY, new TableField[] { Entity.ENTITY.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.NO_ACTION);
+    public static final ForeignKey<EntityThumbnailRecord, EntityRecord> ENTITY_THUMBNAIL__ENTITY_THUMBNAIL_ENTITY_ID_FKEY = Internal.createForeignKey(EntityThumbnail.ENTITY_THUMBNAIL, DSL.name("entity_thumbnail_entity_id_fkey"), new TableField[] { EntityThumbnail.ENTITY_THUMBNAIL.ENTITY_ID }, Keys.ENTITY_PKEY, new TableField[] { Entity.ENTITY.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.NO_ACTION);
 }

@@ -16,10 +16,7 @@ content:
           format: uuid
           nullable: true
         kind:
-          type: string
-          enum:
-            - file
-            - directory
+          $ref: "../enum/Kind.yaml"
         name:
           type: string
         created:

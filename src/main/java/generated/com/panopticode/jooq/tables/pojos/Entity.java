@@ -4,19 +4,18 @@
 package com.panopticode.jooq.tables.pojos;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.panopticode.jooq.enums.KindType;
 import com.panopticode.jooq.enums.StatusType;
-import com.panopticode.jooq.enums.StorageType;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import org.jooq.Generated;
-import org.jooq.JSONB;
 
 
 /**
@@ -34,17 +33,13 @@ public record Entity(
     UUID id,
     @Nullable UUID parentId,
     @NotNull KindType kind,
-    @Nullable StorageType blobStorage,
-    @Nullable String blobRef,
     @NotNull String name,
-    @NotNull LocalDateTime created,
-    @NotNull LocalDateTime lastModified,
-    @Nullable Long sizeB,
+    @Nullable String extension,
+    @NotNull OffsetDateTime created,
+    @NotNull OffsetDateTime lastModified,
+    @Nullable Long sizeBytes,
     @Nullable String mediaType,
-    @Nullable JSONB metadata,
-    @Nullable String hashSha3_256,
-    @Nullable String thumbnail,
-    @Nullable String consolidateV,
+    @Nullable JsonNode customMetadata,
     Boolean rawAccess,
     @NotNull StatusType status
 ) implements Serializable {
@@ -57,17 +52,13 @@ public record Entity(
             value.id,
             value.parentId,
             value.kind,
-            value.blobStorage,
-            value.blobRef,
             value.name,
+            value.extension,
             value.created,
             value.lastModified,
-            value.sizeB,
+            value.sizeBytes,
             value.mediaType,
-            value.metadata,
-            value.hashSha3_256,
-            value.thumbnail,
-            value.consolidateV,
+            value.customMetadata,
             value.rawAccess,
             value.status
         );
@@ -100,23 +91,17 @@ public record Entity(
         }
         else if (!this.kind.equals(other.kind))
             return false;
-        if (this.blobStorage == null) {
-            if (other.blobStorage != null)
-                return false;
-        }
-        else if (!this.blobStorage.equals(other.blobStorage))
-            return false;
-        if (this.blobRef == null) {
-            if (other.blobRef != null)
-                return false;
-        }
-        else if (!this.blobRef.equals(other.blobRef))
-            return false;
         if (this.name == null) {
             if (other.name != null)
                 return false;
         }
         else if (!this.name.equals(other.name))
+            return false;
+        if (this.extension == null) {
+            if (other.extension != null)
+                return false;
+        }
+        else if (!this.extension.equals(other.extension))
             return false;
         if (this.created == null) {
             if (other.created != null)
@@ -130,11 +115,11 @@ public record Entity(
         }
         else if (!this.lastModified.equals(other.lastModified))
             return false;
-        if (this.sizeB == null) {
-            if (other.sizeB != null)
+        if (this.sizeBytes == null) {
+            if (other.sizeBytes != null)
                 return false;
         }
-        else if (!this.sizeB.equals(other.sizeB))
+        else if (!this.sizeBytes.equals(other.sizeBytes))
             return false;
         if (this.mediaType == null) {
             if (other.mediaType != null)
@@ -142,29 +127,11 @@ public record Entity(
         }
         else if (!this.mediaType.equals(other.mediaType))
             return false;
-        if (this.metadata == null) {
-            if (other.metadata != null)
+        if (this.customMetadata == null) {
+            if (other.customMetadata != null)
                 return false;
         }
-        else if (!this.metadata.equals(other.metadata))
-            return false;
-        if (this.hashSha3_256 == null) {
-            if (other.hashSha3_256 != null)
-                return false;
-        }
-        else if (!this.hashSha3_256.equals(other.hashSha3_256))
-            return false;
-        if (this.thumbnail == null) {
-            if (other.thumbnail != null)
-                return false;
-        }
-        else if (!this.thumbnail.equals(other.thumbnail))
-            return false;
-        if (this.consolidateV == null) {
-            if (other.consolidateV != null)
-                return false;
-        }
-        else if (!this.consolidateV.equals(other.consolidateV))
+        else if (!this.customMetadata.equals(other.customMetadata))
             return false;
         if (this.rawAccess == null) {
             if (other.rawAccess != null)
@@ -188,17 +155,13 @@ public record Entity(
         result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
         result = prime * result + ((this.parentId == null) ? 0 : this.parentId.hashCode());
         result = prime * result + ((this.kind == null) ? 0 : this.kind.hashCode());
-        result = prime * result + ((this.blobStorage == null) ? 0 : this.blobStorage.hashCode());
-        result = prime * result + ((this.blobRef == null) ? 0 : this.blobRef.hashCode());
         result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+        result = prime * result + ((this.extension == null) ? 0 : this.extension.hashCode());
         result = prime * result + ((this.created == null) ? 0 : this.created.hashCode());
         result = prime * result + ((this.lastModified == null) ? 0 : this.lastModified.hashCode());
-        result = prime * result + ((this.sizeB == null) ? 0 : this.sizeB.hashCode());
+        result = prime * result + ((this.sizeBytes == null) ? 0 : this.sizeBytes.hashCode());
         result = prime * result + ((this.mediaType == null) ? 0 : this.mediaType.hashCode());
-        result = prime * result + ((this.metadata == null) ? 0 : this.metadata.hashCode());
-        result = prime * result + ((this.hashSha3_256 == null) ? 0 : this.hashSha3_256.hashCode());
-        result = prime * result + ((this.thumbnail == null) ? 0 : this.thumbnail.hashCode());
-        result = prime * result + ((this.consolidateV == null) ? 0 : this.consolidateV.hashCode());
+        result = prime * result + ((this.customMetadata == null) ? 0 : this.customMetadata.hashCode());
         result = prime * result + ((this.rawAccess == null) ? 0 : this.rawAccess.hashCode());
         result = prime * result + ((this.status == null) ? 0 : this.status.hashCode());
         return result;
@@ -211,17 +174,13 @@ public record Entity(
         sb.append(id);
         sb.append(", ").append(parentId);
         sb.append(", ").append(kind);
-        sb.append(", ").append(blobStorage);
-        sb.append(", ").append(blobRef);
         sb.append(", ").append(name);
+        sb.append(", ").append(extension);
         sb.append(", ").append(created);
         sb.append(", ").append(lastModified);
-        sb.append(", ").append(sizeB);
+        sb.append(", ").append(sizeBytes);
         sb.append(", ").append(mediaType);
-        sb.append(", ").append(metadata);
-        sb.append(", ").append(hashSha3_256);
-        sb.append(", ").append(thumbnail);
-        sb.append(", ").append(consolidateV);
+        sb.append(", ").append(customMetadata);
         sb.append(", ").append(rawAccess);
         sb.append(", ").append(status);
 

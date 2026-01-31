@@ -111,8 +111,9 @@ jooq {
                 // manual's next section to learn how to generate several schemata
                 inputSchema = "metadata"
 
-                // Example forced type
-//                forcedTypes {
+
+                forcedTypes {
+                      // Example forced type
 //                    forcedType {
 //                        userType = "com.panopticode.example.persistence.dto.Difficulty"
 //                        converter = "com.panopticode.example.persistence.converter.DifficultyEnumConverter"
@@ -124,6 +125,22 @@ jooq {
 //                        nullability = "NOT_NULL"
 //                    }
 //                }
+                    forcedType {
+                        // Specify the Java type of your custom type. This corresponds to the Converter's <U> type.
+                        userType = "com.fasterxml.jackson.databind.JsonNode"
+
+                        // Apply the built in converter of type
+                        //
+                        // - org.jooq.jackson.extensions.converters.JSONtoJacksonConverter,
+                        // - org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter,
+                        // - org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter,
+                        // - org.jooq.jackson3.extensions.converters.JSONBtoJacksonConverter.
+                        jsonConverter = true
+
+                        // A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions.
+                        includeExpression = ".*\\.custom_metadata"
+                    }
+                }
             }
 
             // Generation flags: See advanced configuration properties
