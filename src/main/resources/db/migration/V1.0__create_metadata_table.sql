@@ -13,8 +13,8 @@ CREATE TABLE metadata.entity (
     kind             metadata.kind_type      NOT NULL,
     name             TEXT                    NOT NULL,
     extension        TEXT,                   -- NULL for directories
-    created          TIMESTAMPTZ             NOT NULL,
-    last_modified    TIMESTAMPTZ             NOT NULL,
+    created          TIMESTAMP               NOT NULL,
+    last_modified    TIMESTAMP               NOT NULL,
     size_bytes       BIGINT,
     media_type       TEXT,                   -- "inode/directory" for directories
     custom_metadata  JSONB,
@@ -58,5 +58,5 @@ CREATE TABLE metadata.entity_thumbnail (
 CREATE TABLE metadata.entity_consolidation (
     entity_id        UUID          PRIMARY KEY REFERENCES metadata.entity(id) ON DELETE CASCADE,
     version          TEXT          NOT NULL,
-    consolidated_at  TIMESTAMPTZ   NOT NULL
+    consolidated_at  TIMESTAMP     NOT NULL
 );

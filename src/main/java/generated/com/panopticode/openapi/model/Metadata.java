@@ -10,6 +10,7 @@ import com.panopticode.openapi.model.MetadataConsolidationInfo;
 import com.panopticode.openapi.model.MetadataHashesInner;
 import com.panopticode.openapi.model.MetadataThumbnailsInner;
 import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "Metadata", description = "Metadata record")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-26T19:03:14.882484979Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-02-03T01:21:35.129907262Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class Metadata {
 
   private UUID id;
@@ -51,10 +52,10 @@ public class Metadata {
   private String name;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime created;
+  private LocalDateTime created;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime lastModified;
+  private LocalDateTime lastModified;
 
   private JsonNullable<Long> sizeBytes = JsonNullable.<Long>undefined();
 
@@ -121,7 +122,7 @@ public class Metadata {
   /**
    * Constructor with only required parameters
    */
-  public Metadata(UUID id, Kind kind, String name, OffsetDateTime created, OffsetDateTime lastModified, Boolean rawAccess, StatusEnum status) {
+  public Metadata(UUID id, Kind kind, String name, LocalDateTime created, LocalDateTime lastModified, Boolean rawAccess, StatusEnum status) {
     this.id = id;
     this.kind = kind;
     this.name = name;
@@ -251,7 +252,7 @@ public class Metadata {
     this.name = name;
   }
 
-  public Metadata created(OffsetDateTime created) {
+  public Metadata created(LocalDateTime created) {
     this.created = created;
     return this;
   }
@@ -263,15 +264,15 @@ public class Metadata {
   @NotNull @Valid 
   @Schema(name = "created", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("created")
-  public OffsetDateTime getCreated() {
+  public LocalDateTime getCreated() {
     return created;
   }
 
-  public void setCreated(OffsetDateTime created) {
+  public void setCreated(LocalDateTime created) {
     this.created = created;
   }
 
-  public Metadata lastModified(OffsetDateTime lastModified) {
+  public Metadata lastModified(LocalDateTime lastModified) {
     this.lastModified = lastModified;
     return this;
   }
@@ -283,11 +284,11 @@ public class Metadata {
   @NotNull @Valid 
   @Schema(name = "last_modified", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("last_modified")
-  public OffsetDateTime getLastModified() {
+  public LocalDateTime getLastModified() {
     return lastModified;
   }
 
-  public void setLastModified(OffsetDateTime lastModified) {
+  public void setLastModified(LocalDateTime lastModified) {
     this.lastModified = lastModified;
   }
 

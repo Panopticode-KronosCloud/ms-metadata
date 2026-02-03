@@ -327,6 +327,8 @@ openApiGenerate {
 	invokerPackage.set('com.panopticode.openapi')
 	apiPackage.set('com.panopticode.openapi.api')
 	modelPackage.set('com.panopticode.openapi.model')
+	typeMappings.set([OffsetDateTime : 'LocalDateTime'])
+	importMappings.set(['java.time.OffsetDateTime' : 'java.time.LocalDateTime'])
 	configOptions = [
 			useSpringBoot3      : 'true',
 			delegatePattern     : 'true',

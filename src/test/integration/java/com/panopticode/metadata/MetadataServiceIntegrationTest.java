@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlMergeMode;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static com.panopticode.metadata.test.utils.AssertUtils.assertThrowsWithMessage;
@@ -258,7 +258,7 @@ public class MetadataServiceIntegrationTest
                                        final String name,
                                        final String extension)
     {
-        final var createdDate = OffsetDateTime.now();
+        final var createdDate = LocalDateTime.now();
         final var modifiedDate = createdDate.plusDays(3L);
 
         return new EntityMetadata(

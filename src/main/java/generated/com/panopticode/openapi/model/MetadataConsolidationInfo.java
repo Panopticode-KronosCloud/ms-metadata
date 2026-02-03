@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -23,13 +24,13 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("Metadata_consolidation_info")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-26T19:03:14.882484979Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-02-03T01:21:35.129907262Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class MetadataConsolidationInfo {
 
   private String version;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime consolidatedAt;
+  private LocalDateTime consolidatedAt;
 
   public MetadataConsolidationInfo() {
     super();
@@ -38,7 +39,7 @@ public class MetadataConsolidationInfo {
   /**
    * Constructor with only required parameters
    */
-  public MetadataConsolidationInfo(String version, OffsetDateTime consolidatedAt) {
+  public MetadataConsolidationInfo(String version, LocalDateTime consolidatedAt) {
     this.version = version;
     this.consolidatedAt = consolidatedAt;
   }
@@ -63,7 +64,7 @@ public class MetadataConsolidationInfo {
     this.version = version;
   }
 
-  public MetadataConsolidationInfo consolidatedAt(OffsetDateTime consolidatedAt) {
+  public MetadataConsolidationInfo consolidatedAt(LocalDateTime consolidatedAt) {
     this.consolidatedAt = consolidatedAt;
     return this;
   }
@@ -75,11 +76,11 @@ public class MetadataConsolidationInfo {
   @NotNull @Valid 
   @Schema(name = "consolidated_at", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("consolidated_at")
-  public OffsetDateTime getConsolidatedAt() {
+  public LocalDateTime getConsolidatedAt() {
     return consolidatedAt;
   }
 
-  public void setConsolidatedAt(OffsetDateTime consolidatedAt) {
+  public void setConsolidatedAt(LocalDateTime consolidatedAt) {
     this.consolidatedAt = consolidatedAt;
   }
 

@@ -8,7 +8,7 @@ import com.panopticode.jooq.tables.EntityConsolidation;
 
 import jakarta.validation.constraints.NotNull;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.jooq.Generated;
@@ -66,7 +66,7 @@ public class EntityConsolidationRecord extends UpdatableRecordImpl<EntityConsoli
     /**
      * Setter for <code>metadata.entity_consolidation.consolidated_at</code>.
      */
-    public void setConsolidatedAt(@NotNull OffsetDateTime value) {
+    public void setConsolidatedAt(@NotNull LocalDateTime value) {
         set(2, value);
     }
 
@@ -75,8 +75,8 @@ public class EntityConsolidationRecord extends UpdatableRecordImpl<EntityConsoli
      */
     @NotNull
     @NotNull
-    public OffsetDateTime getConsolidatedAt() {
-        return (OffsetDateTime) get(2);
+    public LocalDateTime getConsolidatedAt() {
+        return (LocalDateTime) get(2);
     }
 
     // -------------------------------------------------------------------------
@@ -103,7 +103,7 @@ public class EntityConsolidationRecord extends UpdatableRecordImpl<EntityConsoli
     /**
      * Create a detached, initialised EntityConsolidationRecord
      */
-    public EntityConsolidationRecord(@NotNull UUID entityId, @NotNull String version, @NotNull OffsetDateTime consolidatedAt) {
+    public EntityConsolidationRecord(@NotNull UUID entityId, @NotNull String version, @NotNull LocalDateTime consolidatedAt) {
         super(EntityConsolidation.ENTITY_CONSOLIDATION);
 
         setEntityId(entityId);

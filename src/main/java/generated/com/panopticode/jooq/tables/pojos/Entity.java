@@ -12,7 +12,7 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.jooq.Generated;
@@ -35,8 +35,8 @@ public record Entity(
     @NotNull KindType kind,
     @NotNull String name,
     @Nullable String extension,
-    @NotNull OffsetDateTime created,
-    @NotNull OffsetDateTime lastModified,
+    @NotNull LocalDateTime created,
+    @NotNull LocalDateTime lastModified,
     @Nullable Long sizeBytes,
     @Nullable String mediaType,
     @Nullable JsonNode customMetadata,

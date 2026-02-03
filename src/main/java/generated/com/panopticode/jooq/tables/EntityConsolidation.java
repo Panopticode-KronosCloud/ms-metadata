@@ -12,7 +12,7 @@ import com.panopticode.jooq.tables.records.EntityConsolidationRecord;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -83,7 +83,7 @@ public class EntityConsolidation extends TableImpl<EntityConsolidationRecord> {
     /**
      * The column <code>metadata.entity_consolidation.consolidated_at</code>.
      */
-    public final TableField<EntityConsolidationRecord, OffsetDateTime> CONSOLIDATED_AT = createField(DSL.name("consolidated_at"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "");
+    public final TableField<EntityConsolidationRecord, LocalDateTime> CONSOLIDATED_AT = createField(DSL.name("consolidated_at"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
 
     private EntityConsolidation(Name alias, Table<EntityConsolidationRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

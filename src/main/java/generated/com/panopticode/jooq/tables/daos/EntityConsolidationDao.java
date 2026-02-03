@@ -11,7 +11,7 @@ import com.panopticode.jooq.tables.records.EntityConsolidationRecord;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -112,7 +112,7 @@ public class EntityConsolidationDao extends AbstractSpringDAOImpl<EntityConsolid
      * upperInclusive</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.EntityConsolidation> fetchRangeOfConsolidatedAt(OffsetDateTime lowerInclusive, OffsetDateTime upperInclusive) {
+    public List<com.panopticode.jooq.tables.pojos.EntityConsolidation> fetchRangeOfConsolidatedAt(LocalDateTime lowerInclusive, LocalDateTime upperInclusive) {
         return fetchRange(EntityConsolidation.ENTITY_CONSOLIDATION.CONSOLIDATED_AT, lowerInclusive, upperInclusive);
     }
 
@@ -120,7 +120,7 @@ public class EntityConsolidationDao extends AbstractSpringDAOImpl<EntityConsolid
      * Fetch records that have <code>consolidated_at IN (values)</code>
      */
     @NotNull
-    public List<com.panopticode.jooq.tables.pojos.EntityConsolidation> fetchByConsolidatedAt(OffsetDateTime... values) {
+    public List<com.panopticode.jooq.tables.pojos.EntityConsolidation> fetchByConsolidatedAt(LocalDateTime... values) {
         return fetch(EntityConsolidation.ENTITY_CONSOLIDATION.CONSOLIDATED_AT, values);
     }
 }

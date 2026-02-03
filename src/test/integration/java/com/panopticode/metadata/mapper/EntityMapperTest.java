@@ -36,8 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -254,8 +253,8 @@ public class EntityMapperTest
         final var metadata = new HashMap<String, Object>();
         metadata.put("key", "value");
         final var rawAccess = false;
-        final var created = OffsetDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
-        final var lastModified = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        final var created = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
+        final var lastModified = LocalDateTime.of(2022, 1, 1, 0, 0, 0, 0);
 
         final var metadataRequest = new CreateMetadataRequest()
                 .parentId(parentId)
@@ -294,8 +293,8 @@ public class EntityMapperTest
         final var suggestedMediaType = "inode/directory";
         final var metadata = new HashMap<String, Object>();
         final var rawAccess = false;
-        final var created = OffsetDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
-        final var lastModified = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+        final var created = LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0);
+        final var lastModified = LocalDateTime.of(2022, 1, 1, 0, 0, 0, 0);
 
         final var metadataRequest = new CreateMetadataRequest()
                 .parentId(parentId)
@@ -355,8 +354,8 @@ public class EntityMapperTest
                 Kind.FILE,
                 "test.txt",
                 "txt",
-                OffsetDateTime.now(),
-                OffsetDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 null,
                 null,
                 null,
@@ -371,8 +370,8 @@ public class EntityMapperTest
                 Kind.FILE,
                 "test.txt",
                 "txt",
-                OffsetDateTime.now(),
-                OffsetDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 null,
                 false,
                 Status.STAGED);
@@ -398,8 +397,8 @@ public class EntityMapperTest
                 KindType.file,
                 "testName.txt",
                 "txt",
-                OffsetDateTime.now(),
-                OffsetDateTime.now().plusDays(1),
+                LocalDateTime.now(),
+                LocalDateTime.now().plusDays(1),
                 12345L,
                 "text/plain",
                 com.fasterxml.jackson.databind.node.JsonNodeFactory.instance.objectNode().put("foo", "bar"),

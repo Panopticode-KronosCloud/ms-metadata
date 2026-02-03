@@ -7,7 +7,7 @@ package com.panopticode.jooq.tables.pojos;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.jooq.Generated;
@@ -27,7 +27,7 @@ import org.jooq.Generated;
 public record EntityConsolidation(
     @NotNull UUID entityId,
     @NotNull String version,
-    @NotNull OffsetDateTime consolidatedAt
+    @NotNull LocalDateTime consolidatedAt
 ) implements Serializable {
 
     private static final long serialVersionUID = 1L;

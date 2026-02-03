@@ -28,8 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlMergeMode;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,8 +77,8 @@ public class DatabaseIntegrationTest
                         KindType.directory,
                         "test directory",
                         null,
-                        OffsetDateTime.of(2004, 10, 19, 10, 23, 54, 0, ZoneOffset.of("+01:00")),
-                        OffsetDateTime.of(2012, 1, 23, 16, 11, 3, 0, ZoneOffset.of("+00:00")),
+                        LocalDateTime.of(2004, 10, 19, 10, 23, 54, 0),
+                        LocalDateTime.of(2012, 1, 23, 16, 11, 3, 0),
                         null,
                         null,
                         null,

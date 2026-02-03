@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.panopticode.openapi.model.Kind;
 import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ import jakarta.annotation.Generated;
 
 @Schema(name = "createMetadata_request", description = "Metadata record")
 @JsonTypeName("createMetadata_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-26T19:03:14.882484979Z[Europe/London]", comments = "Generator version: 7.18.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-02-03T01:21:35.129907262Z[Europe/London]", comments = "Generator version: 7.18.0")
 public class CreateMetadataRequest {
 
   private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
@@ -42,10 +43,10 @@ public class CreateMetadataRequest {
   private String name;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime created;
+  private LocalDateTime created;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime lastModified;
+  private LocalDateTime lastModified;
 
   private JsonNullable<String> suggestedMediaType = JsonNullable.<String>undefined();
 
@@ -61,7 +62,7 @@ public class CreateMetadataRequest {
   /**
    * Constructor with only required parameters
    */
-  public CreateMetadataRequest(Kind kind, String name, OffsetDateTime created, OffsetDateTime lastModified) {
+  public CreateMetadataRequest(Kind kind, String name, LocalDateTime created, LocalDateTime lastModified) {
     this.kind = kind;
     this.name = name;
     this.created = created;
@@ -128,7 +129,7 @@ public class CreateMetadataRequest {
     this.name = name;
   }
 
-  public CreateMetadataRequest created(OffsetDateTime created) {
+  public CreateMetadataRequest created(LocalDateTime created) {
     this.created = created;
     return this;
   }
@@ -140,15 +141,15 @@ public class CreateMetadataRequest {
   @NotNull @Valid 
   @Schema(name = "created", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("created")
-  public OffsetDateTime getCreated() {
+  public LocalDateTime getCreated() {
     return created;
   }
 
-  public void setCreated(OffsetDateTime created) {
+  public void setCreated(LocalDateTime created) {
     this.created = created;
   }
 
-  public CreateMetadataRequest lastModified(OffsetDateTime lastModified) {
+  public CreateMetadataRequest lastModified(LocalDateTime lastModified) {
     this.lastModified = lastModified;
     return this;
   }
@@ -160,11 +161,11 @@ public class CreateMetadataRequest {
   @NotNull @Valid 
   @Schema(name = "last_modified", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("last_modified")
-  public OffsetDateTime getLastModified() {
+  public LocalDateTime getLastModified() {
     return lastModified;
   }
 
-  public void setLastModified(OffsetDateTime lastModified) {
+  public void setLastModified(LocalDateTime lastModified) {
     this.lastModified = lastModified;
   }
 

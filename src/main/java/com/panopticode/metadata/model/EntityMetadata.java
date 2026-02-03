@@ -21,7 +21,7 @@ package com.panopticode.metadata.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.aglibs.validcheck.ValidCheck;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -45,8 +45,8 @@ public record EntityMetadata(
         Kind kind,
         String name,
         String extension,
-        OffsetDateTime created,
-        OffsetDateTime lastModified,
+        LocalDateTime created,
+        LocalDateTime lastModified,
         Long size,
         String mimeType,
         JsonNode customMetadata,

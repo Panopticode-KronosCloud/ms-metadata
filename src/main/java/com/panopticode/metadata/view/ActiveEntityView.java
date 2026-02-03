@@ -23,7 +23,7 @@ import com.panopticode.metadata.model.Status;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -48,8 +48,8 @@ public record ActiveEntityView(
         Kind kind,
         String name,
         String extension,
-        OffsetDateTime created,
-        OffsetDateTime lastModified,
+        LocalDateTime created,
+        LocalDateTime lastModified,
         JsonNode customMetadata,
         boolean rawAccess,
         Status status,

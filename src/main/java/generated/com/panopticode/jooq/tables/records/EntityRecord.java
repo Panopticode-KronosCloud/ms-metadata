@@ -12,7 +12,7 @@ import com.panopticode.jooq.tables.Entity;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.jooq.Generated;
@@ -114,7 +114,7 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
     /**
      * Setter for <code>metadata.entity.created</code>.
      */
-    public void setCreated(@NotNull OffsetDateTime value) {
+    public void setCreated(@NotNull LocalDateTime value) {
         set(5, value);
     }
 
@@ -123,14 +123,14 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
      */
     @NotNull
     @NotNull
-    public OffsetDateTime getCreated() {
-        return (OffsetDateTime) get(5);
+    public LocalDateTime getCreated() {
+        return (LocalDateTime) get(5);
     }
 
     /**
      * Setter for <code>metadata.entity.last_modified</code>.
      */
-    public void setLastModified(@NotNull OffsetDateTime value) {
+    public void setLastModified(@NotNull LocalDateTime value) {
         set(6, value);
     }
 
@@ -139,8 +139,8 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
      */
     @NotNull
     @NotNull
-    public OffsetDateTime getLastModified() {
-        return (OffsetDateTime) get(6);
+    public LocalDateTime getLastModified() {
+        return (LocalDateTime) get(6);
     }
 
     /**
@@ -242,7 +242,7 @@ public class EntityRecord extends UpdatableRecordImpl<EntityRecord> {
     /**
      * Create a detached, initialised EntityRecord
      */
-    public EntityRecord(UUID id, @Nullable UUID parentId, @NotNull KindType kind, @NotNull String name, @Nullable String extension, @NotNull OffsetDateTime created, @NotNull OffsetDateTime lastModified, @Nullable Long sizeBytes, @Nullable String mediaType, @Nullable JsonNode customMetadata, Boolean rawAccess, @NotNull StatusType status) {
+    public EntityRecord(UUID id, @Nullable UUID parentId, @NotNull KindType kind, @NotNull String name, @Nullable String extension, @NotNull LocalDateTime created, @NotNull LocalDateTime lastModified, @Nullable Long sizeBytes, @Nullable String mediaType, @Nullable JsonNode customMetadata, Boolean rawAccess, @NotNull StatusType status) {
         super(Entity.ENTITY);
 
         setId(id);

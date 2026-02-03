@@ -20,7 +20,7 @@ import com.panopticode.jooq.tables.records.EntityRecord;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -110,12 +110,12 @@ public class Entity extends TableImpl<EntityRecord> {
     /**
      * The column <code>metadata.entity.created</code>.
      */
-    public final TableField<EntityRecord, OffsetDateTime> CREATED = createField(DSL.name("created"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "");
+    public final TableField<EntityRecord, LocalDateTime> CREATED = createField(DSL.name("created"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
 
     /**
      * The column <code>metadata.entity.last_modified</code>.
      */
-    public final TableField<EntityRecord, OffsetDateTime> LAST_MODIFIED = createField(DSL.name("last_modified"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false), this, "");
+    public final TableField<EntityRecord, LocalDateTime> LAST_MODIFIED = createField(DSL.name("last_modified"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
 
     /**
      * The column <code>metadata.entity.size_bytes</code>.
