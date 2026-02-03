@@ -22,6 +22,16 @@ java {
 	targetCompatibility = JavaVersion.VERSION_21
 }
 
+// Register generated (jOOQ, OpenAPI) as a source root so package com.panopticode.jooq
+// and com.panopticode.openapi resolve in the IDE and at compile time.
+sourceSets {
+	main {
+		java {
+			srcDirs 'src/main/java', 'src/main/java/generated'
+		}
+	}
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -122,6 +132,7 @@ testing {
 				implementation testLibs.test.cnt.postgres
 				implementation libs.jooq
 				implementation libs.flyway.core
+				implementation libs.openapi.jack
 			}
 
 			sources {

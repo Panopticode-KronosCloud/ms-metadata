@@ -31,7 +31,7 @@ import java.util.UUID;
  * @param parentId unique identifier of the parent node, null meaning 'root'.
  * @param kind eg 'file', 'folder'.
  * @param name name of the entity, not including path and extension. It cannot be null or empty.
- * @param extension optional extension without leasing dot, e.g. 'png', 'mp3'.
+ * @param extension optional extension without leading dot, e.g. 'png', 'mp3'.
  * @param created ISO 8601 date and time, e.g. '2020-08-30T18:43.568'.
  * @param lastModified ISO 8601 date and time, e.g. '2020-08-30T18:43.568'.
  * @param size size in bytes.
