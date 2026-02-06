@@ -18,35 +18,47 @@
 
 package com.panopticode.metadata;
 
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.BeforeAll;
+import com.panopticode.metadata.test.utils.EnablePostgresTestContainer;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Slf4j
 @SpringBootTest
-@Testcontainers
 @ActiveProfiles("test")
+@EnablePostgresTestContainer
 public abstract class AbstractIntegrationTestBase
+    implements ApplicationContextAware
 {
-    @Container
-    @ServiceConnection
-    private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER =
-            new PostgreSQLContainer<>("postgres:17.4");
+    private static volatile ApplicationContext applicationContext;
 
-    @BeforeAll
-    public static void testFlyway_migration()
+    @Override
+    public void setApplicationContext(final ApplicationContext appContext)
+            throws BeansException
     {
-        // Create the Flyway instance and point it to the database
-        final var flyway = Flyway.configure().dataSource(
-                POSTGRE_SQL_CONTAINER.getJdbcUrl(),
-                POSTGRE_SQL_CONTAINER.getUsername(),
-                POSTGRE_SQL_CONTAINER.getPassword()).load();
+        if (AbstractIntegrationTestBase.applicationContext == null)
+        {
+            AbstractIntegrationTestBase.applicationContext = appContext;
+        }
+    }
 
-        // Start the migration
-        flyway.migrate();
+    @AfterAll
+    public static void shutdownPostgres()
+            throws Exception
+    {
+        try
+        {
+            final var postgresTestContainer = applicationContext.getBean("postgresTestContainer", AutoCloseable.class);
+            log.info("Shutting down Postgres test containers...");
+            postgresTestContainer.close();
+        } catch (BeansException e)
+        {
+            log.warn("Could not gracefully shutdown Postgres test containers", e);
+        }
     }
 }

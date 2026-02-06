@@ -125,6 +125,11 @@ testing {
 			dependencies {
 				implementation project(':')
 				implementation project(':test-common')
+
+				// Lombok
+				compileOnly libs.lombok
+				annotationProcessor libs.lombok
+
 				implementation testLibs.spring.boot.test
 				implementation testLibs.spring.boot.test.cnt
 				implementation testLibs.spring.tx
