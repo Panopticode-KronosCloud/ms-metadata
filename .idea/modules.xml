@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java-spring-boot-ms-template.main.iml" filepath="$PROJECT_DIR$/.idea/modules/java-spring-boot-ms-template.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/metadata-microservice.integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/metadata-microservice.integrationTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/metadata-microservice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/metadata-microservice.main.iml" />
     </modules>
   </component>
 </project>

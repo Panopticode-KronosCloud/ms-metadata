@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  ~ java-spring-boot-ms-template
+  ~ metadata-microservice
   ~ Copyright (c) 2024-2026 Panopticode.
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -131,9 +131,7 @@
         <module name="VisibilityModifier"/>
 
         <!-- Coding -->
-        <module name="ArrayTrailingComma">
-            <property name="alwaysDemandTrailingComma" value="true"/>
-        </module>
+        <module name="ArrayTrailingComma"/>
         <module name="AvoidDoubleBraceInitialization"/>
         <module name="AvoidNoArgumentSuperConstructorCall"/>
         <module name="CovariantEquals"/>
@@ -247,7 +245,9 @@
         <!-- Metrics -->
         <module name="BooleanExpressionComplexity"/>
         <module name="ClassDataAbstractionCoupling"/>
-        <module name="ClassFanOutComplexity"/>
+        <module name="ClassFanOutComplexity">
+            <property name="excludeClassesRegexps" value=".*Mapper$"/>
+        </module>
         <module name="CyclomaticComplexity"/>
         <module name="JavaNCSS"/>
         <module name="NPathComplexity"/>

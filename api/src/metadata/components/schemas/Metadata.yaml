@@ -1,0 +1,96 @@
+description: Metadata record
+type: object
+required:
+  - id
+  - kind
+  - name
+  - created
+  - last_modified
+  - raw_access
+  - status
+properties:
+  id:
+    type: string
+    format: uuid
+  parent_id:
+    type: string
+    format: uuid
+    nullable: true
+  kind:
+    $ref: "../enum/Kind.yaml"
+  blob_type:
+    type: string
+    nullable: true
+  blob_ref:
+    type: string
+    nullable: true
+  name:
+    type: string
+  created:
+    type: string
+    format: date-time
+  last_modified:
+    type: string
+    format: date-time
+  size_bytes:
+    type: integer
+    format: int64
+    nullable: true
+  media_type:
+    type: string
+    nullable: true
+  metadata:
+    type: object
+    additionalProperties: true
+    nullable: true
+  hashes:
+    type: array
+    nullable: true
+    items:
+      type: object
+      properties:
+        algorithm:
+          type: string
+        encoding:
+          type: string
+        value:
+          type: string
+  thumbnails:
+    type: array
+    nullable: true
+    items:
+      type: object
+      required:
+        - width
+        - height
+      properties:
+        width:
+          type: integer
+          minimum: 0
+          exclusiveMinimum: true
+        height:
+          type: integer
+          minimum: 0
+          exclusiveMinimum: true
+  consolidation_info:
+    type: object
+    nullable: true
+    required:
+      - version
+      - consolidated_at
+    properties:
+      version:
+        type: string
+      consolidated_at:
+        type: string
+        format: date-time
+  raw_access:
+    type: boolean
+    default: false
+  status:
+    type: string
+    enum:
+      - unavailable
+      - deleted
+      - staged
+      - active

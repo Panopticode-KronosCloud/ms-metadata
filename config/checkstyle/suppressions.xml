@@ -4,7 +4,7 @@
         "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
         "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <!--
-  ~ java-spring-boot-ms-template
+  ~ metadata-microservice
   ~ Copyright (c) 2024-2026 Panopticode.
   ~
   ~ This program is free software: you can redistribute it and/or modify

@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  title: java-spring-boot-ms-template
+  title: metadata-microservice
   description: |-
-    java-spring-boot-ms-template
+    metadata-microservice
     This is the public API to interact with your webapp, based on the OpenAPI 3.0 specification.
   termsOfService: https://twitter.com/en/tos
   contact:
@@ -14,59 +14,39 @@ info:
     url: https://www.gnu.org/licenses/gpl-3.0.en.html
   version: 1.0.0
 servers:
-  - url: http://localhost:{port}/api
+  - url: http://localhost:{port}/api/v1/metadata
     description: Local development container
     variables:
       port:
         enum:
           - '8080'
-          - '8081'
-        default: '8081'
+        default: '8080'
+  - url: https://raspberrypi.tigon-court.ts.net/api/v1/metadata
+    description: Production server
 tags:
-  - name: cookbook
-    description: Manage a recipe catalog
+  - name: metadata
+    description: Manage files and directories metadata
     externalDocs:
       description: Find out more
-      url: https://en.wikipedia.org/wiki/Cookbook
+      url: https://en.wikipedia.org/wiki/Metadata
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 paths:
-  /recipes:
-    get:
-      description: Returns all recipes in the cookbook
-      summary: Get all recipes
-      tags:
-        - cookbook
-      operationId: getAllRecipes
-      responses:
-        '200':
-          description: List of recipes
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/RecipeRef'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
+  /nodes:
     post:
-      description: Add a new recipe to the book
-      summary: Add new recipe
+      description: Create new metadata record
+      summary: Create new metadata record
       tags:
-        - cookbook
-      operationId: addRecipe
+        - metadata
+      operationId: createMetadata
       responses:
         '201':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/Metadata'
         '405':
           description: Invalid input
           content:
@@ -80,308 +60,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorModel'
       requestBody:
-        $ref: '#/components/requestBodies/NewRecipeRequest'
-  /recipes/{recipeId}:
-    get:
-      description: Returns a recipe by ID
-      summary: Get a recipe
-      tags:
-        - cookbook
-      operationId: getRecipeById
-      parameters:
-        - name: recipeId
-          in: path
-          description: ID of the recipe to return
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Recipe
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Recipe'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        '404':
-          description: Recipe not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-    put:
-      description: Update an existing recipe
-      summary: Update recipe
-      tags:
-        - cookbook
-      operationId: updateRecipe
-      parameters:
-        - name: recipeId
-          in: path
-          description: Recipe id to update
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RecipeRef'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        '404':
-          description: Recipe not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        '405':
-          description: Validation exception
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-      requestBody:
-        $ref: '#/components/requestBodies/UpdateRecipeRequest'
-    delete:
-      description: Deletes an existing recipe from the cookbook
-      summary: Deletes a recipe
-      tags:
-        - cookbook
-      operationId: deleteRecipe
-      parameters:
-        - name: recipeId
-          in: path
-          description: Recipe id to delete
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Deletion completed successfully
-        '404':
-          description: Invalid recipe id
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-  /recipes/{recipeId}/ingredients:
-    get:
-      description: Returns all ingredients related to a recipe
-      summary: Get all ingredients
-      tags:
-        - cookbook
-      operationId: getAllRecipeIngredients
-      parameters:
-        - name: recipeId
-          in: path
-          description: Recipe id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: List of ingredients
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Ingredient'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-    post:
-      description: Add a new ingredient to a recipe
-      summary: Add new ingredient
-      tags:
-        - cookbook
-      operationId: addIngredient
-      parameters:
-        - name: recipeId
-          in: path
-          description: Recipe id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '201':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Ingredient'
-        '405':
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-      requestBody:
-        $ref: '#/components/requestBodies/NewIngredientRequest'
-    delete:
-      description: Deletes all ingredients off a recipe
-      summary: Deletes all ingredients
-      tags:
-        - cookbook
-      operationId: deleteAllIngredients
-      parameters:
-        - name: recipeId
-          in: path
-          description: Recipe id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Deletion completed successfully
-        '404':
-          description: Invalid recipe id
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-  /recipes/{recipeId}/ingredients/{ingredientId}:
-    put:
-      description: Update an existing ingredient
-      summary: Update ingredient
-      tags:
-        - cookbook
-      operationId: updateIngredient
-      parameters:
-        - name: recipeId
-          in: path
-          description: Recipe id
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: ingredientId
-          in: path
-          description: Ingredient id to update
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Ingredient'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        '404':
-          description: Recipe or ingredient not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        '405':
-          description: Validation exception
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-    delete:
-      description: Deletes an existing ingredient off a recipe
-      summary: Deletes a ingredient
-      tags:
-        - cookbook
-      operationId: deleteIngredient
-      parameters:
-        - name: recipeId
-          in: path
-          description: Recipe id
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: ingredientId
-          in: path
-          description: Ingredient id to delete
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Deletion completed successfully
-        '404':
-          description: Invalid recipe or ingredient id
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModel'
+        $ref: '#/components/requestBodies/CreateMetadataRequest'
 components:
   schemas:
+    Kind:
+      type: string
+      enum:
+        - file
+        - directory
     ErrorModel:
       description: Generic error
       type: object
@@ -393,161 +79,140 @@ components:
           type: integer
         message:
           type: string
-    RecipeRef:
-      description: Reference to a recipe (id and title)
+    Metadata:
+      description: Metadata record
       type: object
       required:
         - id
-        - title
+        - kind
+        - name
+        - created
+        - last_modified
+        - raw_access
+        - status
       properties:
         id:
           type: string
           format: uuid
-        title:
-          type: string
-    Difficulty:
-      description: Recipe difficulty
-      type: string
-      enum:
-        - easy
-        - medium
-        - hard
-    RequiredRecipeBody:
-      description: Lighter recipe object, required fields
-      type: object
-      required:
-        - name
-        - servings
-        - difficulty
-        - prepTimeM
-      properties:
-        name:
-          type: string
-        servings:
-          type: integer
-          format: int32
-        textIntro:
-          type: string
-        picture:
-          type: string
-        thumbnail:
-          type: string
-        difficulty:
-          $ref: '#/components/schemas/Difficulty'
-        prepTimeM:
-          type: integer
-          format: int32
-        cookTimeM:
-          type: integer
-          format: int32
-        textOutro:
-          type: string
-    Ingredient:
-      description: Recipe ingredient
-      type: object
-      required:
-        - name
-        - index
-      properties:
-        id:
+        parent_id:
           type: string
           format: uuid
+          nullable: true
+        kind:
+          $ref: '#/components/schemas/Kind'
+        blob_type:
+          type: string
+          nullable: true
+        blob_ref:
+          type: string
+          nullable: true
         name:
           type: string
-        index:
+        created:
+          type: string
+          format: date-time
+        last_modified:
+          type: string
+          format: date-time
+        size_bytes:
           type: integer
-          format: int32
-        quantity:
-          type: number
-          format: float
-        unit:
+          format: int64
+          nullable: true
+        media_type:
           type: string
-    Recipe:
-      description: Complete recipe object
-      type: object
-      required:
-        - name
-        - servings
-        - difficulty
-        - prepTimeM
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        servings:
-          type: integer
-          format: int32
-        textIntro:
-          type: string
-        picture:
-          type: string
-        thumbnail:
-          type: string
-        difficulty:
-          $ref: '#/components/schemas/Difficulty'
-        prepTimeM:
-          type: integer
-          format: int32
-        cookTimeM:
-          type: integer
-          format: int32
-        textOutro:
-          type: string
-        ingredients:
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        hashes:
           type: array
+          nullable: true
           items:
-            $ref: '#/components/schemas/Ingredient'
-    OptionalRecipeBody:
-      description: Lighter recipe object, optional fields
-      type: object
-      properties:
-        name:
-          type: string
-        servings:
-          type: integer
-          format: int32
-        textIntro:
-          type: string
-        picture:
-          type: string
-        thumbnail:
-          type: string
-        difficulty:
-          $ref: '#/components/schemas/Difficulty'
-        prepTimeM:
-          type: integer
-          format: int32
-        cookTimeM:
-          type: integer
-          format: int32
-        textOutro:
-          type: string
-  requestBodies:
-    NewRecipeRequest:
-      description: Data object to save a new recipe
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RequiredRecipeBody'
-    UpdateRecipeRequest:
-      description: Data object to update an existing recipe
-      required: true
-      content:
-        application/json:
-          schema:
             type: object
             properties:
-              toUpdate:
-                $ref: '#/components/schemas/OptionalRecipeBody'
-              toDelete:
-                $ref: '#/components/schemas/OptionalRecipeBody'
-    NewIngredientRequest:
-      description: Data object to save a new ingredient
+              algorithm:
+                type: string
+              encoding:
+                type: string
+              value:
+                type: string
+        thumbnails:
+          type: array
+          nullable: true
+          items:
+            type: object
+            required:
+              - width
+              - height
+            properties:
+              width:
+                type: integer
+                minimum: 0
+                exclusiveMinimum: true
+              height:
+                type: integer
+                minimum: 0
+                exclusiveMinimum: true
+        consolidation_info:
+          type: object
+          nullable: true
+          required:
+            - version
+            - consolidated_at
+          properties:
+            version:
+              type: string
+            consolidated_at:
+              type: string
+              format: date-time
+        raw_access:
+          type: boolean
+          default: false
+        status:
+          type: string
+          enum:
+            - unavailable
+            - deleted
+            - staged
+            - active
+  requestBodies:
+    CreateMetadataRequest:
+      description: Data object to save a new metadata entry
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Ingredient'
+            description: Metadata record
+            type: object
+            required:
+              - kind
+              - name
+              - created
+              - last_modified
+            properties:
+              parent_id:
+                type: string
+                format: uuid
+                nullable: true
+              kind:
+                $ref: '#/components/schemas/Kind'
+              name:
+                type: string
+              created:
+                type: string
+                format: date-time
+              last_modified:
+                type: string
+                format: date-time
+              suggested_media_type:
+                description: Suggested media type. Might be refined automatically.
+                type: string
+                nullable: true
+              metadata:
+                type: object
+                additionalProperties: true
+                nullable: true
+              raw_access:
+                type: boolean
+                default: false

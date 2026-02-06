@@ -1,0 +1,27 @@
+post:
+  description: Create new metadata record
+  summary: Create new metadata record
+  tags:
+    - metadata
+  operationId: createMetadata
+  responses:
+    '201':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Metadata.yaml
+    '405':
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+    default:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorModel.yaml
+  requestBody:
+    $ref: ../components/requestBodies/CreateMetadataRequest.yaml

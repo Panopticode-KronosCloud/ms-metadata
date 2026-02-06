@@ -4,7 +4,7 @@ jooq {
         // Configure the database connection here
         jdbc {
             driver = "org.postgresql.Driver"
-            url = "jdbc:postgresql://localhost:5432/java-spring-boot-ms-template-db"
+            url = "jdbc:postgresql://localhost:5432/metadata-microservice-db"
             user = "local-dev-only"
             password = "local-dev-only"
 
@@ -109,10 +109,11 @@ jooq {
                 //
                 // If left empty, jOOQ will generate all available schemata. See the
                 // manual's next section to learn how to generate several schemata
-                inputSchema = "cookbook"
+                inputSchema = "metadata"
 
-                // Example forced type
-//                forcedTypes {
+
+                forcedTypes {
+                      // Example forced type
 //                    forcedType {
 //                        userType = "com.panopticode.example.persistence.dto.Difficulty"
 //                        converter = "com.panopticode.example.persistence.converter.DifficultyEnumConverter"
@@ -124,6 +125,22 @@ jooq {
 //                        nullability = "NOT_NULL"
 //                    }
 //                }
+                    forcedType {
+                        // Specify the Java type of your custom type. This corresponds to the Converter's <U> type.
+                        userType = "com.fasterxml.jackson.databind.JsonNode"
+
+                        // Apply the built in converter of type
+                        //
+                        // - org.jooq.jackson.extensions.converters.JSONtoJacksonConverter,
+                        // - org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter,
+                        // - org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter,
+                        // - org.jooq.jackson3.extensions.converters.JSONBtoJacksonConverter.
+                        jsonConverter = true
+
+                        // A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions.
+                        includeExpression = ".*\\.custom_metadata"
+                    }
+                }
             }
 
             // Generation flags: See advanced configuration properties

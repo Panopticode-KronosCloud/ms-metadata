@@ -22,6 +22,16 @@ java {
 	targetCompatibility = JavaVersion.VERSION_21
 }
 
+// Register generated (jOOQ, OpenAPI) as a source root so package com.panopticode.jooq
+// and com.panopticode.openapi resolve in the IDE and at compile time.
+sourceSets {
+	main {
+		java {
+			srcDirs 'src/main/java', 'src/main/java/generated'
+		}
+	}
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -49,6 +59,8 @@ dependencies {
 	implementation libs.bundles.logback
 	implementation libs.p6spy
 
+	// ValidCheck
+	implementation libs.validcheck
 
 	// Spring
 	implementation libs.bundles.spring.boot
@@ -58,10 +70,14 @@ dependencies {
 	implementation libs.flyway.core
 	implementation libs.flyway.postgres
 	implementation libs.jooq
+	implementation libs.jooq.jackson.ext
 
 	// Additional dependencies for OpenAPI
 	implementation libs.openapi.jack
 	implementation libs.springdoc.openapi.ui
+
+	// General
+	implementation libs.commons.io
 
 	developmentOnly testLibs.spring.boot.docker
 	developmentOnly testLibs.spring.boot.devtools
@@ -109,6 +125,11 @@ testing {
 			dependencies {
 				implementation project(':')
 				implementation project(':test-common')
+
+				// Lombok
+				compileOnly libs.lombok
+				annotationProcessor libs.lombok
+
 				implementation testLibs.spring.boot.test
 				implementation testLibs.spring.boot.test.cnt
 				implementation testLibs.spring.tx
@@ -116,6 +137,7 @@ testing {
 				implementation testLibs.test.cnt.postgres
 				implementation libs.jooq
 				implementation libs.flyway.core
+				implementation libs.openapi.jack
 			}
 
 			sources {
@@ -197,7 +219,7 @@ jacocoTestCoverageVerification {
 		rule {
 			enabled = false
 			element = 'CLASS'
-			includes = ['com.panopticode.example.*']
+			includes = ['com.panopticode.metadata.*']
 
 			limit {
 				counter = 'LINE'
@@ -246,7 +268,7 @@ tasks.spotbugsMain {
 
 // These should be passed via env vars that are known at deployment time
 flyway {
-	url = 'jdbc:postgresql://localhost:5432/example-db'
+	url = 'jdbc:postgresql://localhost:5432/metadata-db'
 	user = 'root'
 	password = 'local-dev-only'
 }
@@ -310,6 +332,8 @@ openApiGenerate {
 	invokerPackage.set('com.panopticode.openapi')
 	apiPackage.set('com.panopticode.openapi.api')
 	modelPackage.set('com.panopticode.openapi.model')
+	typeMappings.set([OffsetDateTime : 'LocalDateTime'])
+	importMappings.set(['java.time.OffsetDateTime' : 'java.time.LocalDateTime'])
 	configOptions = [
 			useSpringBoot3      : 'true',
 			delegatePattern     : 'true',
@@ -319,7 +343,7 @@ openApiGenerate {
 			booleanGetterPrefix : 'is',
 			configPackage       : 'com.panopticode.openapi.configuration',
 			sourceFolder        : 'src/main/java/generated',
-			title               : 'java-spring-boot-ms-template_OpenAPI',
+			title               : 'metadata-microservice_OpenAPI',
 	]
 }
 
@@ -328,7 +352,7 @@ tasks.named('openApiGenerate') {
 }
 
 tasks.register('generateDocs', GenerateTask) {
-	description = 'Generate html documentation of the java-spring-boot-ms-template public API using the OpenAPI engine.'
+	description = 'Generate html documentation of the metadata-microservice public API using the OpenAPI engine.'
 	group = 'OpenAPI Tools'
 
 	dependsOn bundleApiSpecs
@@ -336,8 +360,8 @@ tasks.register('generateDocs', GenerateTask) {
 	outputDir.set("$projectDir/docs")
     inputSpec.set("$projectDir/api/dist/openapi.yaml")
 	configOptions = [
-			appName        : 'java-spring-boot-ms-template',
-			appDescription : 'A template code base for a java Spring Boot micro-service, with database versioning, a RESTful API defined and documented using OpenAPI and a compelling test suite.',
+			appName        : 'metadata-microservice',
+			appDescription : 'A service responsible for keeping metadata about the entities stored in the system.',
 			artifactVersion: '1.0.0',
 			infoEmail      : 'sink@etlgr.com',
 			infoUrl        : 'https://www.wikipedia.org',

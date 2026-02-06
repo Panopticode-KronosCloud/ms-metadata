@@ -1,6 +1,6 @@
 package com.panopticode.openapi.configuration;
 
-import com.panopticode.openapi.model.Difficulty;
+import com.panopticode.openapi.model.Kind;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +16,12 @@ import org.springframework.core.convert.converter.Converter;
 @Configuration(value = "com.panopticode.openapi.configuration.enumConverterConfiguration")
 public class EnumConverterConfiguration {
 
-    @Bean(name = "com.panopticode.openapi.configuration.EnumConverterConfiguration.difficultyConverter")
-    Converter<String, Difficulty> difficultyConverter() {
-        return new Converter<String, Difficulty>() {
+    @Bean(name = "com.panopticode.openapi.configuration.EnumConverterConfiguration.kindConverter")
+    Converter<String, Kind> kindConverter() {
+        return new Converter<String, Kind>() {
             @Override
-            public Difficulty convert(String source) {
-                return Difficulty.fromValue(source);
+            public Kind convert(String source) {
+                return Kind.fromValue(source);
             }
         };
     }

@@ -1,0 +1,38 @@
+description: Data object to save a new metadata entry
+required: true
+content:
+  application/json:
+    schema:
+      description: Metadata record
+      type: object
+      required:
+        - kind
+        - name
+        - created
+        - last_modified
+      properties:
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+        kind:
+          $ref: "../enum/Kind.yaml"
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        last_modified:
+          type: string
+          format: date-time
+        suggested_media_type:
+          description: Suggested media type. Might be refined automatically.
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        raw_access:
+          type: boolean
+          default: false

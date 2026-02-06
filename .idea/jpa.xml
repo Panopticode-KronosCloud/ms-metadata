@@ -8,6 +8,14 @@
     <persistence-units>
       <persistence-unit moduleName="java-spring-boot-ms-template" name="Default" />
       <persistence-unit moduleName="java-spring-boot-ms-template.integrationTest" name="Default" />
+      <persistence-unit moduleName="metadata-microservice.main" name="Default">
+        <packages>
+          <package value="com.panopticode.metadata" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit moduleName="metadata-microservice" name="Default" />
+      <persistence-unit moduleName="metadata-microservice.integrationTest" name="Default" />
+      <persistence-unit moduleName="metadata-microservice.test" name="Default" />
     </persistence-units>
   </component>
 </project>
