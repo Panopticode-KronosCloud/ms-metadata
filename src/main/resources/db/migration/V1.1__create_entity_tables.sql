@@ -1,8 +1,6 @@
 -- case insensitive text type
 --CREATE EXTENSION IF NOT EXISTS citext;
 
-CREATE SCHEMA metadata;
-
 CREATE TYPE metadata.kind_type    AS ENUM ('file', 'directory');
 CREATE TYPE metadata.status_type  AS ENUM ('unavailable', 'deleted', 'staged', 'active');
 CREATE TYPE metadata.storage_type AS ENUM ('B2', 'S3', 'disk', 'azure_blob', 'google_cloud_storage');  -- ready for extension
@@ -25,12 +23,12 @@ CREATE TABLE metadata.entity (
 
     CHECK (
         (kind = 'directory' AND size_bytes IS NULL AND media_type = 'inode/directory' AND extension IS NULL)
-        OR
+            OR
         (kind = 'file')
-    )
+        )
 );
 
-CREATE INDEX idx_parent_id          ON metadata.entity(parent_id);
+CREATE INDEX idx_parent_id ON metadata.entity(parent_id);
 
 CREATE TABLE metadata.entity_hash (
     entity_id   UUID   NOT NULL REFERENCES metadata.entity(id) ON DELETE CASCADE,
