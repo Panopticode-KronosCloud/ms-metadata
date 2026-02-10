@@ -8,7 +8,6 @@ plugins {
 	id 'jacoco'
 	alias libs.plugins.spring.bom
 	alias libs.plugins.spring.boot
-	alias libs.plugins.flyway
 	alias libs.plugins.jooq
 	alias libs.plugins.openapi.gen
 	alias libs.plugins.spotbugs
@@ -264,13 +263,6 @@ tasks.spotbugsMain {
 //		outputLocation = file("$buildDir/reports/spotbugs.html")
 		setStylesheet("fancy-hist.xsl")
 	}
-}
-
-// These should be passed via env vars that are known at deployment time
-flyway {
-	url = 'jdbc:postgresql://localhost:5432/metadata-db'
-	user = 'root'
-	password = 'local-dev-only'
 }
 
 tasks.register('bundleApiSpecs', Exec) {

@@ -64,7 +64,11 @@ public class EnablePostgresTestContainerContextFactory
         public void customizeContext(final ConfigurableApplicationContext context,
                                      final MergedContextConfiguration mergedConfig)
         {
-            _postgresContainer = new PostgreSQLContainer<>(POSTGRES_IMAGE);
+            _postgresContainer = new PostgreSQLContainer<>(POSTGRES_IMAGE)
+                    .withDatabaseName("metadata_microservice_db")
+                    .withUsername("local-dev-only")
+                    .withPassword("local-dev-only")
+                    .withInitScript("testdb-init/001_init_metadata.sql");
             _postgresContainer.start();
             final var propertySource = _makePropertySource();
             context.getEnvironment().getPropertySources().addFirst(propertySource);
