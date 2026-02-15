@@ -1,5 +1,4 @@
 -- Create roles
-CREATE ROLE metadata_owner WITH LOGIN PASSWORD 'local-dev-only';
 CREATE ROLE metadata_app   WITH LOGIN PASSWORD 'local-dev-only';
 CREATE ROLE metadata_ro    WITH LOGIN PASSWORD 'local-dev-only';
 

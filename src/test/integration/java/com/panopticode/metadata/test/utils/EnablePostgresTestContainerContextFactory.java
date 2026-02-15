@@ -66,7 +66,7 @@ public class EnablePostgresTestContainerContextFactory
         {
             _postgresContainer = new PostgreSQLContainer<>(POSTGRES_IMAGE)
                     .withDatabaseName("metadata_microservice_db")
-                    .withUsername("local-dev-only")
+                    .withUsername("metadata_owner")
                     .withPassword("local-dev-only")
                     .withInitScript("testdb-init/001_init_metadata.sql");
             _postgresContainer.start();

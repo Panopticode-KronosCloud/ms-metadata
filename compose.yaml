@@ -14,7 +14,7 @@ services:
       - '8000'
     environment:
       - DB_URL=jdbc:postgresql://postgres:5432/metadata_microservice_db
-      - DB_USERNAME=local-dev-only # FIXME this should be metadata_app - fix privileges ALSO REGRESS-TEST JOOQ
+      - DB_USERNAME=metadata_app
       - DB_PASSWORD=local-dev-only
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     healthcheck:
@@ -31,7 +31,7 @@ services:
     environment:
       - 'POSTGRES_DB=metadata_microservice_db'
       - 'POSTGRES_PASSWORD=local-dev-only'
-      - 'POSTGRES_USER=local-dev-only'
+      - 'POSTGRES_USER=metadata_owner'
     volumes:
       # init scripts, only run once on empty DB
       - ./src/test/resources/testdb-init:/docker-entrypoint-initdb.d:ro
