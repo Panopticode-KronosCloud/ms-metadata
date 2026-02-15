@@ -89,8 +89,10 @@ public class EnablePostgresTestContainerContextFactory
         {
             final var properties = Map.<String, Object>of(
                     "spring.datasource.url", _postgresContainer.getJdbcUrl(),
-                    "spring.datasource.username", _postgresContainer.getUsername(),
-                    "spring.datasource.password", _postgresContainer.getPassword(),
+                    "spring.datasource.username", "metadata_app",
+                    "spring.datasource.password", "local-dev-only",
+                    "spring.flyway.user", _postgresContainer.getUsername(),
+                    "spring.flyway.password", _postgresContainer.getPassword(),
                     // Prevent any in memory db from replacing the data source
                     // See @AutoConfigureTestDatabase
                     "spring.test.database.replace", "NONE");
