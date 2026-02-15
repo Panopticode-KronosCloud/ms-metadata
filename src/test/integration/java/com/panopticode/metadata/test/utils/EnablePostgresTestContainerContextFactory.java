@@ -64,7 +64,11 @@ public class EnablePostgresTestContainerContextFactory
         public void customizeContext(final ConfigurableApplicationContext context,
                                      final MergedContextConfiguration mergedConfig)
         {
-            _postgresContainer = new PostgreSQLContainer<>(POSTGRES_IMAGE);
+            _postgresContainer = new PostgreSQLContainer<>(POSTGRES_IMAGE)
+                    .withDatabaseName("metadata_microservice_db")
+                    .withUsername("metadata_owner")
+                    .withPassword("local-dev-only")
+                    .withInitScript("testdb-init/001_init_metadata.sql");
             _postgresContainer.start();
             final var propertySource = _makePropertySource();
             context.getEnvironment().getPropertySources().addFirst(propertySource);
@@ -85,8 +89,10 @@ public class EnablePostgresTestContainerContextFactory
         {
             final var properties = Map.<String, Object>of(
                     "spring.datasource.url", _postgresContainer.getJdbcUrl(),
-                    "spring.datasource.username", _postgresContainer.getUsername(),
-                    "spring.datasource.password", _postgresContainer.getPassword(),
+                    "spring.datasource.username", "metadata_app",
+                    "spring.datasource.password", "local-dev-only",
+                    "spring.flyway.user", _postgresContainer.getUsername(),
+                    "spring.flyway.password", _postgresContainer.getPassword(),
                     // Prevent any in memory db from replacing the data source
                     // See @AutoConfigureTestDatabase
                     "spring.test.database.replace", "NONE");

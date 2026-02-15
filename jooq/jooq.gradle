@@ -4,9 +4,9 @@ jooq {
         // Configure the database connection here
         jdbc {
             driver = "org.postgresql.Driver"
-            url = "jdbc:postgresql://localhost:5432/metadata-microservice-db"
-            user = "local-dev-only"
-            password = "local-dev-only"
+            url = System.getenv("DB_URL")
+            user = System.getenv("DB_OWNER_USERNAME") ?: System.getenv("DB_USERNAME")
+            password = System.getenv("DB_OWNER_PASSWORD") ?: System.getenv("DB_PASSWORD")
 
             // You can also pass user/password and other JDBC properties in the optional properties tag:
 //        properties {
