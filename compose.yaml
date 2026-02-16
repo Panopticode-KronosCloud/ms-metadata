@@ -14,10 +14,11 @@ services:
       - '8000'
     environment:
       - DB_URL=jdbc:postgresql://postgres:5432/metadata_microservice_db
-      - DB_USERNAME=metadata_app
-      - DB_PASSWORD=local-dev-only
-      - DB_OWNER_USERNAME=metadata_owner
-      - DB_OWNER_PASSWORD=local-dev-only
+    secrets:
+      - db_username
+      - db_password
+      - db_owner_username
+      - db_owner_password
     healthcheck:
       # "curl --fail --silent localhost:8081/status | grep OK || exit 1"
       # TODO replace this silly thing with a command similar to the above, with wget
@@ -43,3 +44,13 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+secrets:
+  db_username:
+    file: ./src/test/resources/secrets/app_user_test
+  db_password:
+    file: ./src/test/resources/secrets/app_password_test
+  db_owner_username:
+    file: ./src/test/resources/secrets/owner_user_test
+  db_owner_password:
+    file: ./src/test/resources/secrets/owner_password_test
