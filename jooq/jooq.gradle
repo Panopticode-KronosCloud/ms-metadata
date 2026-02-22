@@ -5,8 +5,8 @@ jooq {
         jdbc {
             driver = "org.postgresql.Driver"
             url = System.getenv("DB_URL")
-            user = System.getenv("DB_OWNER_USERNAME") ?: System.getenv("DB_USERNAME")
-            password = System.getenv("DB_OWNER_PASSWORD") ?: System.getenv("DB_PASSWORD")
+            user = System.getenv("DB_OWNER_USERNAME") ?: System.getenv("DB_APP_USERNAME")
+            password = System.getenv("DB_OWNER_PASSWORD") ?: System.getenv("DB_APP_PASSWORD")
 
             // You can also pass user/password and other JDBC properties in the optional properties tag:
 //        properties {
